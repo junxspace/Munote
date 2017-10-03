@@ -11,15 +11,17 @@ const {Menu}           = require('electron');//菜单
 const {MenuItem}       = require('electron');//菜单列表
 const {Tray}           = require('electron');//托盘
 const {globalShortcut} = require('electron');
+const {dialog}         = require('electron'); 
 const log4js           = require('log4js');
 const AppInfo          = require('./package.json');
 const exp              = require('./lib/export');
 const img              = require('./lib/image');
 const appName          = AppInfo.name; // app名称
 const appVersion       = AppInfo.version; // app名称
+
 var mainWindow //主窗口
-	, loadingWindow; // loading窗口
-var appTray    ; //app托盘
+	, loadingWindow // loading窗口
+  , appTray    ; //app托盘
 
 // Make this app a single instance app.
 //
@@ -40,7 +42,7 @@ function makeSingleInstance () {
 }
 
 function initGlobalShortcut(){
-	globalShortcut.register('CommandOrControl+Shift+M',  ()=> {
+	globalShortcut.register('CommandOrControl+Shift+M', () => {
 		toggleMainWindow();
   });
 }
@@ -70,16 +72,33 @@ function initApplicationMenu(){
 }
 
 function initTray(){
-	let contextMenu = new Menu();
-	contextMenu.append(new MenuItem({ label: '退出', click: exit }));
+	// let contextMenu = new Menu();
+ //    contextMenu.append(new MenuItem(
+ //    { label: '退出', click: exit }
+ //    ));
 
-	appTray = new Tray(__dirname + '/img/icon/16.png');
-	appTray.setToolTip('Version: ' + appName + '-' + appVersion);
+  let contextMenu = Menu.buildFromTemplate([
+    { label: 'markdown语法', click: ()=>{shell.openExternal('https://help.github.com/articles/basic-writing-and-formatting-syntax/');} }
+    , { label: 'markdown示例', click: ()=>{shell.openExternal('https://github.github.com/github-flavored-markdown/sample_content.html');} }
+    , { label: '关于', click: () => {
+        // console.log(dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}));
+         dialog.showMessageBox({ 
+              message: appName + ' version: ' + appVersion
+              , buttons: ["OK"] });
 
-	appTray.on('click', toggleMainWindow);
+      } }
+    , { label: '退出', click: exit }
+    ]);
+
+  // mac icon
+	appTray = new Tray(__dirname + '/img/icon/16@2x.png');
+	appTray.setToolTip('欢迎使用' + appName + '! :-)');
+
+	// appTray.on('click', toggleMainWindow);
 	appTray.on('right-click', toggleMainWindow);
 	appTray.setContextMenu(contextMenu);
 }
+
 
 function toggleMainWindow(){
   if(BrowserWindow.getFocusedWindow() == null){
@@ -161,7 +180,7 @@ function initMainWindow(){
 	mainWindow.loadURL('file://'+__dirname+'/main.html');
 	// mainWindow.maximize();// 最大化
 
-	mainWindow.webContents.openDevTools(); //DEBUG TOOLS
+	// mainWindow.webContents.openDevTools(); //DEBUG TOOLS
 	mainWindow.webContents.__appname = appName;
 	mainWindow.on('closed',()=>{
 		mainWindow = null;
@@ -249,8 +268,6 @@ function initConfig(){
 	global.__mdPath   = _mdPath;
 }
 
-
-
 /**
  * 初始化应用相关事件监听器
  */
@@ -265,7 +282,7 @@ function initEventListener(){
 	// app就绪
 	app.on('ready',()=>{
 
-		// initTray();
+		initTray();
 		initGlobalShortcut();		
 		createLoadingWindow();
 		initMainWindow(); // 初始化主窗口
