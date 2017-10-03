@@ -115,7 +115,6 @@ a {
   -webkit-transition: All 0.4s ease-in-out; 
 }
 
-
 /** list style **/
 ul {
   padding            : 0px;
@@ -129,7 +128,7 @@ ul.list > li > .header {
   line-height: 40px;
   width      : 100%;
   margin     : 0px;
-  font-size  : 14px;
+  font-size  : 15px;
   position   : relative;
 }
 
@@ -709,16 +708,14 @@ input[type="checkbox"] {
 
 .note-list-container > .content  ul.note-list > li.item > .content {
   text-align   : right;
-  font-size    : 12px;
-  padding-right: 8px;
-  color        : #696969;
+  font-size    : 10px;
   margin-bottom: 4px;
 }
 
-.note-list-container > .content  ul.note-list > li.item > .content span{
-  border       : 1px solid #A9A9A9;
+.note-list-container > .content  ul.note-list > li.item > .content span {
+  border-radius: 4px;
+  padding: 0px 3px 0px 3px;    
 }
-
 
 /* 主区域 */
 .main-container {
@@ -783,7 +780,7 @@ input[type="checkbox"] {
   padding: 0 4px 0 24px;
 }
 
-.main-container > .preview-container .note-name-container{
+.main-container > .preview-container .note-name-container {
   width : 380px;
   margin: 0px;
   -webkit-user-select: text;
@@ -791,34 +788,38 @@ input[type="checkbox"] {
   cursor:default;   
 }
 
-.main-container > .preview-container .note-name{
+.main-container > .preview-container .note-name {
   height       : 32px;
   font-size    : 20px;
-  margin-left  : 24px;
+  margin-left  : 32px;
   white-space  : nowrap;
   text-overflow: ellipsis;
   overflow     : hidden;
 }
 
-.main-container > .preview-container .note-detail{
-  float       : right;
+.main-container > .preview-container .note-detail {
   text-align  : center;
-  width       : 450px;
-  margin-right: 16px;
+  margin-left  : 32px;
   padding     : 0px;
-  font-size   : 12px;
   height      : 24px;
+  letter-spacing: 0!important;
 }
 
-.notebook-name-wrap,.update-time-wrap,.create-time-wrap{
+.main-container > .preview-container .note-detail span {
   height         : 14px;
   line-height    : 14px;
-  font-style     : italic;
+  /*font-style     : italic;*/
   white-space  : nowrap;
   overflow     : hidden; 
   text-overflow: ellipsis;
+  margin-right: 16px;
+  background-color: whitesmoke;
+  color: #363636;
+  border: 1px solid #eee;
+  border-radius: 3px; 
+  padding: 1px 3px 1px 3px;
+  font-size : 9px;
 }
-
 
 .main-container > .preview-container .content{
   position      : absolute;

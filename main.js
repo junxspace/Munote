@@ -180,7 +180,7 @@ function initMainWindow(){
 	mainWindow.loadURL('file://'+__dirname+'/main.html');
 	// mainWindow.maximize();// 最大化
 
-	// mainWindow.webContents.openDevTools(); //DEBUG TOOLS
+	mainWindow.webContents.openDevTools(); //DEBUG TOOLS
 	mainWindow.webContents.__appname = appName;
 	mainWindow.on('closed',()=>{
 		mainWindow = null;

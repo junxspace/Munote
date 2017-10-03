@@ -2358,14 +2358,14 @@ function renderMarkdown(){
   let _renderContent = md.render(_content);
   
   let _note_name     = activeNoteItem.attr('note-name');  
-  // let _notebook_name = activeNoteItem.attr('notebook-name');
   let _update_time   = activeNoteItem.attr('update-time');
-  // let _create_time   = activeNoteItem.attr('create-time');
+  let _notebook_name = activeNoteItem.attr('notebook-name');
+  let _create_time   = activeNoteItem.attr('create-time');
   
   $('#preview_container .note-name').text(_note_name);
   $('.note-detail .update-time').text(_update_time);
-  // $('.note-detail .create-time').text(_create_time);
-  // $('.note-detail .notebook-name').text(_notebook_name);
+  $('.note-detail .create-time').text(_create_time);
+  $('.note-detail .notebook-name').text(_notebook_name);
 
   $('#preview_content').html(_renderContent);
   handleImgLink($('#preview_content')); // 处理图片地址

@@ -7,7 +7,7 @@ a {
 }
 
 ul.list > li.active > .header {
-  background      : #E6E6E6;
+  background : #E6E6E6;
 }
 
 ul.sublist{
@@ -19,9 +19,11 @@ ul.sublist > li > .header > .mark {
 }
 
 ul.sublist > li.active > .header {
-  /*background: #dcdfe1;*/
-	color: #fff;
-  background: #3884ff;  
+  background: #dcdfe1;
+  /*	color: #fff;
+  background: #3884ff;  */
+/*  background-color: whitesmoke;
+  color: #363636;*/
 }
 
 .toc-wrapper{
@@ -66,7 +68,7 @@ ul.sublist > li.active > .header {
 }
 
 .note-list-container > .content  ul.note-list > li.item > .content {
-  color         : #4680F3;
+  color : #4680F3;
 }
 
 .note-list-container > .content  ul.note-list > li.item > .content span{
