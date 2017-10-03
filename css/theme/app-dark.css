@@ -1,0 +1,131 @@
+html,body{
+  background: #3D3D3D;
+  color : #BDBDBD;
+}
+
+a{
+	color :#727272;
+}
+
+ul.list > li.active > .header {
+	color           : #fff;
+	background-color: rgba(243,241,246,0.1);
+}
+
+ul.sublist{
+	/*color: #000;*/
+}
+
+ul.sublist > li > .header > .mark {
+	background: #57acf5;
+}
+
+ul.sublist > li > .header {
+	
+}
+
+ul.sublist > li.active > .header {
+	color: #fff;
+	background-color: rgba(243,241,246,0.1);
+}
+
+.toc-wrapper{
+	background : #444444;
+}
+
+/** 侧边栏：分类和列表 **/
+.sidebar-container{
+	background : #eee;
+}
+
+/** 笔记分类 **/
+.sidebar-container > .note-catalog-container{
+	background     :url('../../img/pebbles@2x.jpg') no-repeat ;
+	background-size: 100% auto !important;	
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog-footer{
+	background-color: rgba(243,241,246,0.1);
+	color      : #DCDCDC;	
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog-footer:hover{
+	color:#A9A9A9;
+}
+
+/** 笔记列表 **/
+.sidebar-container > .note-list-container{
+	box-shadow: -5px 0px 10px rgba(0,0,0,0.19), -5px 0px 3px rgba(0,0,0,0.23);
+	background : #444444;
+}
+
+.sidebar-container > .note-list-container > .header button{
+	color     : #DCDCDC;
+}
+
+.note-list .starred {
+	color: #F39D01;
+}
+
+
+.note-list-name-wrap  > .name{
+	color : #BDBDBD;
+}
+
+.note-search input{
+	background        : #3C3C3C;
+	color             : #9E9E9E;
+	border            : 1px solid #696969;
+}
+
+.note-list-container > .content  ul.note-list > li.item{
+	border-top: 1px solid #3e3e3e;
+}
+
+.note-list-container > .content  ul.note-list > li.item > .content {
+	color : #696969;
+}
+
+.note-list-container > .content  ul.note-list > li.item > .content span{
+	border : 1px solid #A9A9A9;
+}
+
+.note-list-container > .content  ul.note-list > li.item.active {
+	background: #5493F8;
+}
+
+.note-list-container > .content  ul.note-list > li.item.active > .header {
+	color: #FAFCFE;
+}
+
+.note-list-container > .content  ul.note-list > li.item.active > .content {
+	color: #DCDCDC;
+}
+
+.main-container > .empty-note-container > .content {
+	background   : #212122;
+}
+
+/* 笔记预览 */
+.main-container > .preview-container{
+	color : #696969;
+}
+
+.notebook-name-wrap,.update-time-wrap,.create-time-wrap{
+	color : #A9A9A9;
+}
+
+/* toc-tree Style */
+.toc-tree {
+	color  : #696969;
+}
+
+.toc-tree li:hover{
+	color: #DCDCDC;
+	background-color: rgba(243,241,246,0.1);
+}
+
+.toc-tree li.active{
+	color  : #DCDCDC;
+	background-color: rgba(243,241,246,0.1);
+}

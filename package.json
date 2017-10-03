@@ -1,0 +1,30 @@
+{
+  "name": "Munote",
+  "version": "0.0.1",
+  "main": "main.js",
+  "description": "markdown editor.",
+  "homepage": "http://junxspace.github.io/munote/",
+  "baseurl": "/assets",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "jun",
+      "email": "junxspace@hotmail.com"
+    }
+  ],
+  "dependencies": {
+    "highlight.js": "^9.4.0",
+    "jquery": "^2.2.3",
+    "log4js": "^0.6.36",
+    "markdown-it": "^6.0.2",
+    "markdown-it-checkbox": "^1.1.0",
+    "markdown-it-footnote": "^2.0.0",
+    "markdown-it-sub": "^1.0.0",
+    "markdown-it-sup": "^1.0.0",
+    "markdown-it-toc": "^1.1.0",
+    "markdown-it-toc-and-anchor": "^4.1.1",
+    "nedb": "^1.8.0",
+    "node-mkdirs": "0.0.1",
+    "rmdir": "^1.2.0"
+  }
+}

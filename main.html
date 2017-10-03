@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Munote</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="public/pure-min.css"></link>
+  <link rel="stylesheet" href="public/codemirror/lib/codemirror.css"></link>
+  <link rel="stylesheet" href="public/codemirror/theme/eclipse.css"></link>
+  <link rel="stylesheet" href="public/codemirror/theme/zenburn.css"></link>
+  <link rel="stylesheet" href="public/font-awesome/css/font-awesome.min.css"></link>
+  <link rel="stylesheet" href="public/jquery-scrollbar/jquery.scrollbar.css"></link>
+  <link rel="stylesheet" href="node_modules/highlight.js/styles/default.css"></link>
+  <link rel="stylesheet" href="css/theme/github-markdown-light.css" id="markdown_css"></link>
+  <link rel="stylesheet" href="css/common.css"></link>
+  <link rel="stylesheet" href="css/theme/app-light.css" id="app_css"></link>
+</head>
+<body>
+  <div class="loading-wrapper">
+    <div class="loading">
+      <embed src="img/ring-alt.svg" type="image/svg+xml" />
+    </div>
+  </div> 
+
+  <div class="page-header">
+  </div>
+
+  <!-- toc -->
+  <div class="toc-wrapper full-height hide" id="toc_wrapper">
+    <div id="markdown_toc" class="full-height scrollbar-macosx">
+    </div>
+  </div>
+	<div class="sidebar-container full-height" id="sidebar_container">
+		<!-- 笔记分类 -->
+		<div class="note-catalog-container full-height">
+			<div class="note-catalog scrollbar-macosx full-height" id="note_catalog_wrapper">
+        <ul class="list">
+          <li>
+            <div class="header animation" onclick="showAllNoteList(this)">
+              <i class="first fa fa-th"></i><i class="second fa fa-angle-right"></i><span class="l-all-notes"></span>
+            </div>
+            <div class="content"></div>
+          </li>  
+          <li>
+            <div class="header animation" onclick="showNoteListByStarred(this)">
+              <i class="first fa fa-star"></i><i class="second fa fa-angle-right"></i><span class="l-starred"></span>
+            </div>
+            <div class="content"></div>
+          </li>                      
+          <li>
+            <div class="header" onclick="toggleNotebookList()">
+              <i class="first fa fa-book"></i><i class="second fa fa-angle-right"></i><span class="l-notebook-name"></span>
+              <div class="right animation-button" onclick="showNewNotebookPanel(event)"><i class="fa fa-plus"></i></div>
+            </div>
+            <div class="content notebook-list-content  full-height">
+              <ul class="sublist" id="notebook_list" onmousedown="handleNotebookMouseDown(event)"></ul>
+            </div>
+          </li>
+        </ul> 
+      </div>
+			<div class="animation note-catalog-footer" onclick="toggleSettings(event)">
+        Munote<i class="animation fa fa-angle-down" aria-hidden="true"></i>
+      </div>
+		</div>
+
+		<!-- 笔记列表 -->
+		<div class="note-list-container full-height">
+			<div class="header">
+        <div class="pure-g">
+          <div class="pure-u-1-8">
+              <button class="animation-button active" onmouseup="handleSortModeMouseUp(event)"><i id="sort_mode" class="fa fa-sort-amount-desc"></i></button>
+          </div>
+          <div class="pure-u-3-4 note-list-name-wrap center">
+            <span class="name" id="note_list_name"></span>
+            <span class="count" id="note_list_count"></span>
+          </div>
+          <div class="pure-u-1-8">
+              <button class="animation-button active"  onclick="toCreateNote(1)"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="pure-g">
+          <div class="pure-u-1-1 note-search">
+            <input type="text" id="search_content" onkeypress="enterPress(event,searchNote)" placeholder="&#xf002; Search"><br>
+            <i class="fa fa-spinner searching" id="searching"></i>
+            <i class="fa fa-times clear-search" id="clear_search" onclick="clearSearch()"></i>
+          </div>
+        </div> 
+      </div>
+      <div class="content scrollbar-macosx full-height" id="note_list_content_wrapper">
+          <ul class="note-list full-height" id="note_list" onmouseup="handleNoteMouseUp(event)"></ul>
+      </div>
+		</div>
+	</div>
+
+	<div class="main-container full-height" id="main_container">
+    <!-- timeline-note-container -->
+    <div class="timeline-note-container" id="timeline_note_container">
+      <div class="content">
+        <!-- <h1>Timeline...</h1> -->
+      </div>
+    </div>
+
+    <!-- 空笔记 -->
+    <div class="empty-note-container" id="empty_note_container">
+      <div class="content">
+        <span class="l-no-notes-do-u-want"></span>&nbsp;<a href="javascript:;" onclick="toCreateNote(1)"><span class="l-new-notes"></span></a>
+      </div>
+    </div>
+
+    <!-- 编辑模式 -->
+    <div class="note-container full-height" id="note_container">
+  		<div class="header">
+  			<input class="note-title" type="text" id="note_name" oninput="noteNameChange()" placeholder="未命名笔记" maxlength="40"/>
+      </div>
+      <div class="editor-container scrollbar-macosx full-height" id="editor_content_container" onmouseup="toggleEditorToolbar(event)">
+        <textarea id="editor-content" class="editor-content full-height" ></textarea>
+      </div>
+		</div>
+
+    <!-- 菜单栏 -->
+    <div class="pure-g menubar" id="editor_menubar">
+      
+        <!--  显示/隐藏侧边栏: 缩放, fa fa-expand   展开，fa fa-compress 收缩 -->
+        <!-- <div class="pure-u-1-5" id="toggle_sidebar_btn" onclick="toggleSidebar()"><i class="fa fa-expand"></i></div> -->
+
+        <!-- 编辑/阅读模式 -->
+        <div class="pure-u-1-6" id="toggle_preview_btn" onclick="togglePreview()"><i class="fa fa-pencil"></i></div>
+
+        <!--  收藏 :  fa fa-star   已收藏，fa fa-star-o 未收藏 -->
+        <div class="pure-u-1-6" id="starred_btn" onclick="toggleStarred()"><i class="starred fa fa-star-o"></i></div>
+
+        <!-- 保存 -->
+        <div class="pure-u-1-6" id="save_btn" onclick="saveNote()"><i class="fa fa-floppy-o"></i></div>
+
+        <!-- 导出 -->
+        <div class="pure-u-1-6" id="export_btn" onclick="showExportMenu(event)"><i class="fa fa-share"></i></div>
+       
+        <!-- 显示/隐藏导航栏 -->
+        <div class="pure-u-1-6" id="preview_btn" onclick="toggleNavigation()"><i class="fa fa-bars"></i></div>              
+
+        <!-- 设置 -->
+        <div class="pure-u-1-6 active" id="toggle_settings_btn" onclick="toggleSettings(event)"><i class="fa fa-gear"></i></div>
+    </div>
+    
+    <!-- 阅读模式 --> 
+    <div class="preview-container full-height hide" id= "preview_container">
+      <div class="head">
+        <div class="pure-g note-name-container">
+          <div class="pure-u-1-1 note-name"></div>
+        </div>
+        <div class="pure-g note-detail">
+            <div class="pure-u-1-3 notebook-name-wrap"><span class="notebook-name"></span></div>
+            <div class="pure-u-1-3 create-time-wrap"><span class="create-time"></span></div>
+            <div class="pure-u-1-3 update-time-wrap"><span class="update-time"></span></div>
+        </div>
+      </div>
+      <div class="content full-height">
+        <div class="pure-g full-height">
+          <div class="pure-u-1-1 markdown-body scrollbar-macosx full-height" id="preview_content">
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--       <div class="footer">
+    </div> -->
+	</div>
+
+  <!-- ************************************************************* -->
+  <!-- 右键菜单和弹出面板等隐藏元素 -->
+  <!-- ************************************************************* -->
+
+  <!-- 新建笔记本面板 -->
+  <div class="float-panel" id="new_notebook_panel">
+<!--     <div class="pure-g">
+      <div class="pure-u-1-1 center">
+        <span class="l-pls-input-notebook-name"></span>
+      </div>
+    </div>   -->  
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <input type="text" id="notebook_name" onkeyup="enterPress(event,createNotebook)" placeholder="" maxlength="20"/>
+      </div>
+    </div>
+    <div class="pure-g center">
+      <div class="pure-u-1-2">
+        <button class="btn btn-default" type="button" onclick="hideNewNotebookPanel()"><span class="l-cancel"></span></button>
+      </div>
+      <div class="pure-u-1-2">
+        <button class="btn btn-primary " type="button" onclick="createNotebook()" ><span class="l-confirm"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 重命名笔记本名称面板 -->
+  <div class="float-panel" id="rename_notebook_panel">
+<!--     <div class="pure-g">
+      <div class="pure-u-1-1 center">
+        <span class="l-pls-input-notebook-name"></span>
+      </div>
+    </div>     -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <input type="text" id="new_notebook_name" onkeyup="enterPress(event,renameNotebook)"/>
+      </div>
+    </div>
+    <div class="pure-g center">
+      <div class="pure-u-1-2">
+        <button class="btn btn-default" type="button"  onclick="hideRenameNotebookPanel()" ><span class="l-cancel"></span></button>
+      </div>
+      <div class="pure-u-1-2">
+        <button class="btn btn-primary" type="button" onclick="renameNotebook()" ><span class="l-confirm"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 笔记本列表右键菜单 -->
+  <div class="float-panel menu" id="notebook_menu" onmouseleave="hideNotebookMenu()">
+    <ul>
+      <li class="l-mark-default" onclick="toMarkDefaultNotebook(event)"></li>
+      <!-- <li class="divided l-new-notebook" onclick="toCreateNotebook(event)"></li> -->
+      <li class="divided l-new-note" onclick="toCreateNote(2)"></li>
+      <li class="l-rename" onclick="toRenameNotebook(event)"></li>
+      <li class="l-delete"  onclick="toDelNotebook(event)"></li>
+    </ul>
+  </div>
+
+  <!-- 笔记列表右键菜单 -->
+  <div class="float-panel menu" id="note_menu" onmouseleave="hideNoteMenu()">
+    <ul>
+      <!-- <li class="" onclick="toggleStarred()">星标</li> -->
+      <li class="l-export-markdown" onclick="exportFile('markdown')"></li>
+      <li class="l-export-html" onclick="exportFile('html')"></li>
+      <li class="l-export-pdf" onclick="exportFile('pdf')"></li>
+      <li class="divided l-delete" onclick="toDelNote(event)"></li>
+    </ul>
+  </div>    
+
+  <!-- 排序按钮右键菜单 -->
+  <div class="float-panel menu" id="sort_mode_menu" onmouseleave="hideSortModeMenu()">
+    <ul>
+      <li id="sort_by_starred" onclick="sortBy('starred')"><i class="fa fa-circle"></i><span class="l-sort-by-starred"></span></li>
+      <li id="sort_by_name" onclick="sortBy('note_name')"><i class="fa fa-circle"></i><span class="l-sort-by-name"></span></li>
+      <li id="sort_by_create_time" onclick="sortBy('create_time')"><i class="fa fa-circle"></i><span class="l-sort-by-create-time">/span></li>
+      <li id="sort_by_update_time" onclick="sortBy('update_time')"><i class="fa fa-circle"></i><span class="l-sort-by-update-time"></span></li>
+    </ul>
+  </div>
+
+  <!-- 菜单栏导出按钮菜单 -->
+  <div class="float-panel menu" id="export_menu" onmouseleave="hideExportMenu()">
+    <ul>
+      <li onclick="exportFile('markdown')" class="l-export-markdown"></li>
+      <li onclick="exportFile('pdf')" class="l-export-pdf"></li>
+      <li onclick="exportFile('html')" class="l-export-html"></li>
+    </ul>
+  </div>   
+
+  <!-- 编辑器工具栏 -->
+  <div class="popup editor-toolbar" id="editor_toolbar">
+    <div class="pure-g toolbar" id="editor_toolbar_list">
+      <div class="pure-u-1-12 item" onclick="applyHeader()"><i class="fa fa-header"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyBold()"><i class="fa fa-bold"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyItalic()"><i class="fa fa-italic"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyUnderline()"><i class="fa fa-underline"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyStrikethrough()"><i class="fa fa-strikethrough"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyeSubscript()"><i class="fa fa-subscript"></i></div>
+      <div class="pure-u-1-12 item" onclick="applySuperscript()"><i class="fa fa-superscript"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyQuote()"><i class="fa fa-quote-left"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyOrderedList()"><i class="fa fa-list-ol"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyList()"><i class="fa fa-list-ul"></i></div>
+      <div class="pure-u-1-12 item" onclick="showLinkInput()"><i class="fa fa-link"></i></div>
+      <div class="pure-u-1-12 item" onclick="applyImage()"><i class="fa fa-file-image-o"></i></div>
+    </div>
+    <div class="pure-g toolbar hide" id="link_input">
+      <div class="pure-u-1-1 link-input" onclick="">
+        <input type="text" id="link_input_text" onkeypress="enterPress(event,applyLink)" placeholder="&#xf0c1; http://munote.com">
+        <i class="fa fa-check" onclick="applyLink()"></i>
+        <i class="fa fa-remove" onclick="showEditorToolbarList()"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 设置面板 -->
+  <div class="float-panel settings" id="settings_panel">
+    <div class="pure-g">
+      <div class="pure-u-1-1 center">
+        <span class="l-current-version"></span> : <span class="l-version"></span>
+      </div>
+    </div>    
+    <div class="pure-g center">
+      <div class="pure-u-1-2">
+        <label for="lang_gb" class="pure-radio">
+            <input id="lang_gb" type="radio" name="langRadios" value="gb" onclick="switchLang('gb')">
+            <span>English</span>
+        </label>
+      </div>
+      <div class="pure-u-1-2">
+        <label for="lang_cn" class="pure-radio">
+            <input id="lang_cn" type="radio" name="langRadios" value="cn" onclick="switchLang('cn')">
+            <span>中 文</span>
+        </label>  
+      </div>        
+    </div>
+    <div class="pure-g button-pair center">
+      <div class="pure-u-1-1">
+        <button class="btn btn-default l-day-mode" id="day_mode_btn" type="button" onclick="switchTheme('day')"></button>
+        <button class="btn btn-primary l-night-mode" id="night_mode_btn"  type="button" onclick="switchTheme('night')"></button>
+      </div>
+    </div>      
+  </div>
+
+  <!-- 搜索框 -->
+  <div class="float-panel search-dialog draggable" id="search_dialog">
+    <div class="pure-g title">
+      <div class="pure-u-5-6 center">
+        <span class="l-find-and-replace"></span>
+      </div>
+      <div class="pure-u-1-6 right">
+        <i class="fa fa-times" onclick="hideSearchDialog()"></i>
+      </div>
+    </div>
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <input type="text" name="" id="search_for" tabindex="1" placeholder="Search for...">
+      </div>
+      <div class="pure-u-1-2 button-pair center">
+        <button class="btn btn-default l-previous" type="button" onclick="findPrevious()"></button>
+        <button class="btn btn-primary l-next" type="button" onclick="findNext()"></button>
+      </div>
+    </div> 
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <input type="text" name="" id="replace_with" tabindex="2" placeholder="Replace for...">
+      </div>
+      <div class="pure-u-1-2 button-pair center">
+        <button class="btn btn-default l-replace" type="button" onclick="replaceOnce()"></button>
+        <button class="btn btn-primary l-replace-all" type="button" onclick="replaceAll()"></button>
+      </div>
+    </div>
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <label for="match_case_cb">
+          <input id="match_case_cb" type="checkbox" ><span class="l-math-case"></span>
+        </label>
+      </div>
+      <div class="pure-u-1-2">
+        <label for="wrap_around_cb">
+          <input id="wrap_around_cb" type="checkbox"><span class="l-wrap-around"></span>
+        </label>
+      </div>
+    </div>      
+  </div>
+
+  <script>window.jQuery = window.$ = require('jquery');</script>
+  <script src="public/js/jquery-dateFormat.min.js" ></script>      
+	<script src="public/codemirror/lib/codemirror.js" ></script>
+  <script src="public/codemirror/mode/markdown/markdown.js"></script>
+  <script src="public/codemirror/mode/javascript/javascript.js"></script>
+  <script src="public/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="public/codemirror/mode/clike/clike.js"></script>
+  <script src="public/codemirror/addon/mode/overlay.js"></script>   
+  <script src="public/codemirror/addon/search/search.js"></script>    
+  <script src="public/codemirror/addon/search/searchcursor.js"></script>  	
+  <script src="public/codemirror/mode/gfm/gfm.js"></script>
+  <script src="public/js/keypress-2.1.3.min.js" ></script> 
+  <script src="public/jquery-ui/jquery-ui.min.js" ></script> 
+  <script src="public/jquery-scrollbar/jquery.scrollbar.min.js" ></script>
+  <script src="public/ztree_toc/js/jquery.ztree.all-3.5.min.js" ></script>
+  <script src="public/ztree_toc/dist/ztree_toc.js" ></script>
+  <script src="public/jquery-i18n-properties/jquery.i18n.properties.js"></script> 
+  <script src="public/js/velocity.min.js" ></script> 
+	<script src="public/js/velocity.ui.js" ></script> 
+  <script src="js/common.js" ></script>  
+	<script src="js/app.js" ></script> 	
+</body>
+</html>  

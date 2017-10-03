@@ -1,0 +1,18 @@
+{
+  "appenders": [
+    {
+      "type": "console",
+      "layout": {
+        "type": "pattern",
+        "pattern": "%m%n"
+      }      
+    },
+    {
+      "type": "dateFile",
+      "filename": "munote",
+      "pattern": ".yyyy-MM-dd.log",
+      "alwaysIncludePattern": true,
+      "category": "logger"
+    }
+  ]
+}

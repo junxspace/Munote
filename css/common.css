@@ -1,0 +1,1044 @@
+@font-face { 
+  font-family: "Miui-Regular";
+  src: url('../fonts/Miui-Regular.ttf') format("truetype"); 
+} 
+
+html,body{
+  height    : 100%;
+  width     : 100%;
+  margin    : 0px; 
+  padding   : 0px;
+  overflow  : hidden;
+  font-family: "Miui-Regular";
+}
+
+div,h1,h2,h3,h4,h5,h6{
+  margin  : 0px;
+  padding : 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.fa-times {
+  transition:All 0.4s ease-in-out;
+  -webkit-transition:All 0.4s ease-in-out;
+}
+
+.fa-times:hover {
+  transform:scale(1.3);
+  -webkit-transform:scale(1.3);
+}
+
+.loading-wrapper{
+  position           : absolute;
+  -webkit-user-select: none;
+  user-select        : none;
+  left               : 0px;
+  top                : 0px;
+  width              : 100%;
+  height             : 100%;
+  z-index            : 999;
+  display            : table;
+  background         : rgba(255, 255, 255, 0.2)!important;
+}
+
+.loading{
+  vertical-align: middle;
+  text-align: center;
+  display       : table-cell;
+  margin        : auto;
+  width         : 195px;
+}
+
+.page-header {
+  position  : absolute;
+  top       : 0px;
+  left      : 0px;
+  height    : 24px;
+  width     : 100%;
+  /*background: red;*/
+  -webkit-app-region: drag;
+}
+
+/**::selection {
+  background : #F5F5F5;
+  background   : rgba(0, 0, 0, 0.5)!important;
+  color        : #000 !important;
+  border       : 1px solid red;
+  border-radius: 5px;
+  box-shadow   : 0 2px 4px rgba(0,0,0,0.2);
+}*/
+
+
+.animation-button {
+  -webkit-transition: all 0.4s ease-in-out!important;
+}
+
+.animation-button:hover{
+  -webkit-transform:scale(1.3); 
+}
+
+.full-height{
+  height: 100%;
+}
+
+.right{
+  float: right;
+  text-align: right;
+}
+
+.left{
+  float: left;
+  text-align: left;
+}
+
+.center{
+  text-align: center;
+}
+
+.hidden,.hide{
+  display: none;
+}
+
+.pure-g {
+  margin: 8px;  
+}
+
+.blur {   
+  -webkit-filter: blur(10px);
+  filter: blur(10px);   
+}
+
+.animation {
+  -webkit-transition: All 0.4s ease-in-out; 
+}
+
+
+/** list style **/
+ul {
+  padding            : 0px;
+  list-style         : none;
+  -webkit-user-select: none;
+  margin: 0px; 
+}
+
+ul.list > li > .header {
+  height     : 40px;
+  line-height: 40px;
+  width      : 100%;
+  margin     : 0px;
+  font-size  : 14px;
+  position   : relative;
+}
+
+ul.list > li > .header > i {
+  position   : absolute;
+  left       : 8px;
+  top        : 12px;
+  width      : 16px;
+  height     : 16px;
+  line-height: 16px;
+  text-align : center;
+}
+ul.list > li > .header > span {
+  padding-left: 32px;
+}
+
+ul.list > li >.header > i.first {
+  transition        :All 0.4s ease-in-out;
+  -webkit-transition:All 0.4s ease-in-out;
+}
+
+i.second {
+  display: none;
+}
+
+ul.list > li >.header:hover > i.first {
+  opacity          :0;
+  transform        :rotate(60deg);
+  -webkit-transform:rotate(60deg);
+}
+
+ul.list > li >.header:hover > i.second {
+  display: inline-block;
+}
+
+ul.list > li > .header  div.right{
+  margin-right: 15px; 
+  display     : none;
+  cursor      : pointer;
+}
+
+ul.list > li:hover > .header div.right{
+  display          : block;
+} 
+
+ul.list > li > .content{
+  font-size: 14px;
+}
+
+ul.sublist > li {
+  height     : 28px;
+  line-height: 28px;
+}
+
+ul.sublist > li > .header{
+  white-space     : nowrap;
+  text-overflow   : ellipsis;
+  overflow        : hidden;   
+}
+
+ul.sublist > li > .header > span{
+  padding-right   : 8px;
+}
+
+ul.sublist > li > .header > .mark {
+  display          : inline-block;
+  opacity          : 0;
+  height           : 10px;
+  width            : 10px;
+  margin-left      : 16px;
+  margin-right     : 8px;
+  border-radius    : 99em;
+  transform        :opacity;
+  -webkit-transform:opacity;
+}
+
+ul.sublist > li.default .header > .mark {
+  opacity: 1;
+}
+
+
+ul.sublist > li > .content{
+  padding-left : 32px;
+}
+
+ul.sublist > li > .header {
+  
+}
+
+.float-panel{
+  position           : absolute;
+  background         : #F9F9F9;
+  color              : #222;
+  box-sizing         : border-box;
+  overflow           : hidden;
+  z-index            : 99;
+  padding            : 16px 16px 16px 16px;
+  display            : none;
+  -webkit-user-select: none;  
+  border: 1px solid transparent;
+  border-radius: 4px; 
+  box-shadow: 0 1px 1px rgba(0,0,0,.06); 
+  border-color: #c2c0c2 #c2c0c2 #a19fa1;     
+}
+
+.float-panel .span {
+  font-size: 13px;
+}
+
+.float-panel .content {
+  text-align: center;
+}
+
+.float-panel button{
+  width      : 60px;
+  font-size  : 12px;
+  height     : 24px;
+  line-height: 24px;
+  overflow   : hidden;
+}
+
+.float-panel input[type=text]{
+  width  : 100%;
+  padding: 0px 4px 0px 4px;
+}
+
+.float-panel input::-webkit-input-placeholder{
+  font-size : 14px;
+  text-align: left;
+}
+
+.float-panel.confirm {
+  text-align: center;
+  min-width: 200px;
+  max-width: 250px;
+}
+
+.float-panel.confirm .pure-g {
+  margin-top: 8px;
+}
+
+.float-panel.confirm .title {
+  font-size : 12px;
+  text-align: center;
+}
+
+.float-panel.confirm .content {
+  font-size : 14px;
+  text-align: center;
+}
+
+.float-panel.confirm .pure-g > div{
+  padding-top     : 4px;
+  padding-bottom  : 4px;
+  white-space     : nowrap;
+  text-overflow   : ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow        : hidden;   
+}
+
+.popup {
+  position          : absolute;
+  background        : rgba(0, 0, 0, 0.6)!important;
+  height            : 32px;
+  left              : 50px;
+  top               : 50px;
+  border-radius     : 5px;
+  color             : #E9E9E9;
+  box-shadow        : 0 2px 4px rgba(0,0,0,0.2);
+  overflow          : hidden;
+  display           : none;
+  -webkit-transition: All 0.3s ease-in-out;   
+}
+
+.popup.editor-toolbar {
+  width: 352px;
+}
+
+
+.popup .toolbar {
+  margin: 0px;
+}
+
+.popup .toolbar > div:first-child{
+  margin-left: 8px;
+}
+
+.popup .toolbar > div:last-child{
+  margin-right: 8px;
+}
+
+.popup .toolbar > div {
+  cursor            : default;
+  text-align        : center;
+  width             : 24px;
+  padding           : 0px 2px 0px 2px;
+  height            : 32px;
+  line-height       : 32px;
+  -webkit-transition: All 0.3s ease-in-out;   
+}
+
+.popup .toolbar > div.item:hover {
+  background: rgba(0, 0, 0, 0.5)!important; 
+  color     :#969696;
+}
+
+button{
+  outline      : none;
+  box-shadow   : 0 2px 2px rgba(0,0,0,0.2);
+  border: 1px solid transparent;
+  border-radius: 4px; 
+  vertical-align: middle;
+  text-align: center;
+  padding: 0px;
+}
+
+
+button.btn-default{
+  color: #333;
+  background-color: #fcfcfc;
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#fcfcfc),color-stop(100%,#f1f1f1));
+  background-image: -webkit-linear-gradient(top,#fcfcfc 0,#f1f1f1 100%);
+  background-image: linear-gradient(to bottom,#fcfcfc 0,#f1f1f1 100%);
+  border-color: #c2c0c2 #c2c0c2 #a19fa1;
+}
+
+button.btn-default:hover{
+  background: rgb(213,213,213);
+  color     : #000;
+}
+
+button.btn-primary{
+  background: #4680F3;
+  color     : #fff;
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#6eb4f7),color-stop(100%,#1a82fb)); 
+  border-color: #388df8 #388df8 #0866dc;
+}
+
+button.btn-primary:hover{
+  background: #6698FF;
+  color     : #fff;
+}
+
+
+input{
+  /*margin       : 4px 8px 4px 8px;*/
+  /*border-radius: 5px;*/
+  /*border       : 1px solid #EEEEEE;*/
+  background   : #fff;
+  height       : 24px;
+  line-height  : 24px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: 0; 
+}
+
+/** 右键菜单 样式 */
+.menu{
+  margin    : 0px;
+  padding   : 0px;
+  font-size : 12px;
+  text-align: left;
+  min-width : 150px;
+  cursor    : default;
+}
+
+.menu ul {
+  margin-top   : 8px;
+  margin-bottom: 8px;
+}
+.menu li {
+  position: relative;
+  height  : 18px;
+  line-height: 18px;
+  padding : 2px 24px 2px 24px;
+}
+
+.menu li > i {
+  display  : none;
+  position : absolute;
+  color    : #57acf5;
+  font-size: 8px;
+  top      : 6px;
+  left     : 8px;
+}
+
+/*.menu li.divided{
+  padding      : 0px;
+  display: none;
+  height    : 0.5px;
+  background: #ddd;
+}
+*/
+.menu li.divided:after{
+  position  : absolute;
+  content   : '';
+  top       : 0;
+  left      : 0;
+  width     : 100%;
+  /*background: rgba(34,36,38,.1);*/
+  background: #ddd;
+  height    : 1px;
+}
+
+.menu li:hover {
+  background: #4680F3;
+  color     : #fff;
+}
+
+.toc-wrapper{
+  position  : absolute;
+  box-sizing: border-box;
+  overflow  : hidden;
+  width     : 380px;
+  top       : 0px;
+  left      : 0px;
+  height    : 100%;
+  box-shadow: -5px 0px 10px rgba(0,0,0,0.19), 5px 0px 3px rgba(0,0,0,0.23);
+  z-index   : 99;
+}
+
+/** 侧边栏：分类和列表 **/
+.sidebar-container{
+  float              : left;
+  width              : 380px;
+  -webkit-user-select: none;
+}
+
+/** 笔记分类 **/
+.sidebar-container > .note-catalog-container{
+  float          : left;
+  width          : 150px;
+  background-size: 100% auto !important;  
+  box-sizing     : border-box;
+  padding-bottom : 32px!important;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog{
+  box-sizing    : border-box;
+  padding-top   : 24px!important;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog li{
+  cursor: default;
+}
+
+.notebook-list-content{
+  /*overflow-y: auto;*/
+}
+
+.notebook-list-content ul li {
+  width        : 150px;
+  white-space  : nowrap; 
+  overflow     : hidden; 
+  text-overflow: ellipsis;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog{
+  box-sizing    : border-box;
+  padding-top   : 24px!important;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog li{
+  cursor: default;
+}
+
+.notebook-list-content{
+  /*overflow-y: auto;*/
+}
+
+.notebook-list-content ul li {
+  width        : 150px;
+  white-space  : nowrap; 
+  overflow     : hidden; 
+  text-overflow: ellipsis;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog-footer{
+  position   : fixed;
+  height     : 32px;
+  line-height: 32px;
+  width      : 150px;
+  bottom     : 0px;
+  padding    : 0;
+  margin     : 0px;
+  overflow   : hidden;
+  text-align : center;  
+}
+
+
+.sidebar-container > .note-catalog-container > .note-catalog-footer:hover i{
+   -webkit-transform:rotate(180deg);
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog-footer > i{
+  margin-left: 8px;
+}
+
+.settings{
+  width: 250px;
+}
+
+.settings label{
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.settings input[type="radio"] {
+  margin-top: -1px;
+  vertical-align: middle;
+}
+
+input[type="checkbox"] {
+  margin-top: -1px;
+  vertical-align: middle;
+}
+
+.button-pair button {
+  width      : 80px;
+  height     : 24px;
+  line-height: 24px;
+  padding    : 0px 8px 0px 8px;
+  margin     : 0px;
+}
+
+.button-pair button:first-child{
+  border-top-left-radius    : 5px;
+  border-bottom-left-radius : 5px;
+  border-top-right-radius   : 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.button-pair button:last-child{
+  border-top-left-radius    : 0px;
+  border-bottom-left-radius : 0px;
+  border-top-right-radius   : 5px;
+  border-bottom-right-radius: 5px;
+}
+
+/** 笔记列表 **/
+.sidebar-container > .note-list-container{
+  padding-top: 80px;
+  margin-left: 150px; 
+  width      : 230px;
+  box-sizing : border-box;
+}
+
+
+/** 搜索按钮、新建笔记按钮和搜索框 **/
+.sidebar-container > .note-list-container > .header{
+  margin-top     : -64px;
+  width          : 100%;
+  height         : 64px;
+  box-sizing     : border-box;
+}
+
+.sidebar-container > .note-list-container > .header .pure-g {
+  margin     : 0px 8px 0px 8px;
+  height     : 32px;
+  line-height: 32px;
+}
+
+.sidebar-container > .note-list-container > .header .pure-g div{
+  margin : 0px;
+  padding: 0px;
+}
+
+.sidebar-container > .note-list-container > .header button{
+  background: transparent;
+  box-shadow: none;
+  font-size : 16px;
+  border    : 0px;
+}
+
+.note-list {
+  margin: 0px;
+  white-space  : nowrap; 
+}
+
+.note-list .header{
+  white-space  : nowrap; 
+  overflow     : hidden; 
+  text-overflow: ellipsis;  
+}
+
+/** 笔记列表名称 **/
+.note-list-name-wrap { 
+  text-align   : center;  
+  white-space  : nowrap; 
+  overflow     : hidden; 
+  text-overflow: ellipsis;  
+}
+
+.note-list-name-wrap  > .name{
+  font-size : 14px;
+}
+
+.note-list-name-wrap  > .count{
+  font-size: 10px;
+  color    : #5493F8;
+}
+
+
+
+/** 新建笔记按钮 **/
+.new-note-button{
+  text-align: right;
+  margin-right: 8px;
+}
+
+/** 笔记搜索框 **/
+.note-search{
+  position  : relative;
+}
+
+.note-search input{
+  font-family       : FontAwesome;
+  width             : 190px;
+  margin            : 0px;
+  height            : 24px;
+  line-height       : 24px;
+  padding-left      : 8px;
+  padding-right     : 8px; 
+  -webkit-transition: outline 0.2s ease-in-out; 
+}
+
+.searching{
+  display: none;
+}
+
+.clear-search{
+  display: none;
+}
+
+.note-search  i{
+  position: absolute;
+  top     : 6px;
+  right   : 16px;
+}
+
+.note-search > input::-webkit-input-placeholder{
+  -webkit-user-select: none;
+  font-size    : 14px;
+  text-align   : center;
+}
+
+.note-search > input:focus::-webkit-input-placeholder{
+  text-align: left;
+}
+
+/** 笔记列表 **/
+.note-list-container > .content {
+}
+
+.note-list-container > .content  ul.note-list{
+  box-sizing: border-box;
+  bottom    : 0px;
+  cursor: default;
+  /*overflow-y: auto;*/
+}
+
+.note-list-container > .content  ul.note-list > li.item{
+  padding   : 4px;
+}
+
+
+.note-list-container > .content  ul.note-list > li.item > .header {
+  font-size    : 14px;
+  margin-bottom: 4px;
+}
+
+.note-list-container > .content  ul.note-list > li.item > .header > i {
+  margin-left  : 8px;
+  margin-right : 8px;
+}
+
+.note-list-container > .content  ul.note-list > li.item > .content {
+  text-align   : right;
+  font-size    : 12px;
+  padding-right: 8px;
+  color        : #696969;
+  margin-bottom: 4px;
+}
+
+.note-list-container > .content  ul.note-list > li.item > .content span{
+  border       : 1px solid #A9A9A9;
+}
+
+
+/* 主区域 */
+.main-container {
+  overflow: hidden; 
+}
+
+.main-container .footer{
+  position   : fixed;
+  box-sizing : border-box;
+  bottom     : 0px;
+  width      : 100%;
+  height     : 32px;
+  line-height: 32px;
+  padding    : 0px 16px 0px 16px;
+}
+
+/* 笔记时间线 */
+.main-container > .timeline-note-container{
+  height     : 100%;
+  padding-top: 10%;
+  box-sizing : border-box;
+  overflow   : hidden;
+  text-align : center;
+}
+
+/** 空笔记样式 */
+.main-container > .empty-note-container{
+  height     : 100%;
+  padding-top: 20%;
+  box-sizing : border-box;
+  overflow   : hidden;
+  text-align : center;
+}
+
+.main-container > .empty-note-container > .content {
+  margin       : auto;
+  width        : 380px;
+  height       : 50px;
+  line-height  : 50px;
+  border-radius: 5px;
+  font-size    : 14px;
+  padding      : 16px;
+}
+
+/* 笔记预览 */
+.main-container > .preview-container{
+  margin     : auto;
+  padding-top: 24px;
+  box-sizing : border-box;
+  overflow   : hidden;  
+}
+
+.main-container > .preview-container .head {
+  position: fixed;
+  width   : 100%;
+  height  : 80px;
+  z-index: 99;
+}
+
+.main-container > .preview-container .content {
+  width   : 100%;
+  padding: 0 4px 0 24px;
+}
+
+.main-container > .preview-container .note-name-container{
+  width : 380px;
+  margin: 0px;
+  -webkit-user-select: text;
+  user-select        : text;  
+  cursor:default;   
+}
+
+.main-container > .preview-container .note-name{
+  height       : 32px;
+  font-size    : 20px;
+  margin-left  : 24px;
+  white-space  : nowrap;
+  text-overflow: ellipsis;
+  overflow     : hidden;
+}
+
+.main-container > .preview-container .note-detail{
+  float       : right;
+  text-align  : center;
+  width       : 450px;
+  margin-right: 16px;
+  padding     : 0px;
+  font-size   : 12px;
+  height      : 24px;
+}
+
+.notebook-name-wrap,.update-time-wrap,.create-time-wrap{
+  height         : 14px;
+  line-height    : 14px;
+  font-style     : italic;
+  white-space  : nowrap;
+  overflow     : hidden; 
+  text-overflow: ellipsis;
+}
+
+
+.main-container > .preview-container .content{
+  position      : absolute;
+  padding-bottom: 32px;
+  box-sizing    : border-box;
+  overflow      : hidden;
+  padding-top   : 80px;
+}
+
+.main-container > .note-container{
+  margin     : auto;
+  padding-top: 56px;
+  bottom     : 0px;
+  box-sizing : border-box;
+  overflow   : hidden;  
+}
+
+.main-container > .note-container > .header{
+  margin-top : -56px;
+  height     : 56px;
+  width      : 100%;
+}
+
+.main-container > .note-container > .header > input.note-title{
+  margin    : 16px 8px 8px 24px;
+  height    : 32px;
+  font-size : 20px;
+  width     : 380px;
+  border    : 0px;
+  text-align: left;
+  outline   : none;
+  background: transparent;
+}
+
+
+#editor_menubar{
+  position   : absolute;
+  margin     : 0px;
+  top        : 16px;
+  right      : 16px;
+  width      : 180px;
+  height     : 32px;
+  line-height: 32px;
+  text-align : center;
+  z-index: 99;
+  font-size  : 18px;
+  -webkit-user-select: none;
+  user-select        : none;  
+  cursor: default;
+  color : #696969;
+}
+
+
+#editor_menubar > div.active{
+  color : #5493F8;
+}
+
+#editor_menubar > div i {
+  -webkit-transition: All 0.3s ease-in-out;
+}
+
+#editor_menubar > div.active:hover i{
+  -webkit-transform:scale(1.3); 
+}
+
+.main-container > .note-container > .editor-container{
+  padding-left  : 8px!important;
+  padding-right : 16px;
+  box-sizing    : border-box;
+  overflow      : hidden;
+  position      : relative;
+  padding-bottom: 64px; 
+}
+
+.popup .toolbar .link-input {
+  position: relative;
+  width   : 100%;
+  margin  : 0px!important;
+  overflow: hidden;
+}
+
+.popup .toolbar .link-input input{
+  font-family       : FontAwesome;
+  width             : 286px;
+  margin            : 0px;
+  height            : 24px;
+  line-height       : 24px;
+  padding-left      : 8px;
+  padding-right     : 56px; 
+  border-radius     : 0x;
+  border            : 0px;
+  background        : transparent;
+  outline           : none;
+}
+
+.popup .toolbar .link-input  i{
+  -webkit-transition: All 0.3s ease-in-out; 
+}
+
+.popup .toolbar .link-input  i.fa-check{
+  position: absolute;
+  top     : 6px;
+  right   : 32px;
+}
+
+.popup .toolbar .link-input  i.fa-remove{
+  position: absolute;
+  top     : 6px;
+  right   : 10px;
+}
+
+.popup .toolbar .link-input  i:hover {
+  color            :#969696;
+  -webkit-transform:scale(1.3);   
+}
+
+
+.search-dialog {
+  width : 400px;
+  cursor: default;
+}
+
+.search-dialog .title{
+  height: 24px;
+}
+
+.search-dialog input[type=text]{
+  width:166px;
+}
+
+.markdown-body {
+  width: 100%!important;
+}
+
+.ppt-body{
+  height: 100%;
+  width:  100%;
+  border: 0; 
+}
+
+/** ----------------- **/
+/** codemirror style  **/
+/** ----------------- **/
+.CodeMirror {
+  height    : 100%;
+  font-size : 16px;
+}
+
+.CodeMirror-gutters{
+  background: #fff;
+  border-right: 0px;
+}
+
+.CodeMirror-line{
+  padding-left: 16px!important;
+}
+
+.CodeMirror-linenumber{
+}
+
+.cm-matchhighlight {
+  color           : #000;
+  border-radius   : 5px;
+  background-color: #FFFFA8;
+}
+
+.CodeMirror-vsrollbar{
+  display: none!important;
+}
+
+
+/* toc-tree Style */
+.toc-tree * {
+  padding    : 0;
+  margin     : 0;
+  font-size  : 12px;
+  font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+}
+
+.toc-tree {
+  margin : 0;
+  padding: 24px 0px 24px 0px;
+  color  : #000;
+}
+.toc-tree li {
+  padding   : 4px 16px 4px 16px;
+  margin    : 0;
+  list-style: none;
+  text-align: left;
+  outline   : 0;
+  cursor: pointer;
+}
+
+.toc-tree li.level-1 {
+  padding-left: 24px;
+}
+
+.toc-tree li.level-2 {
+  padding-left: 32px;
+}
+
+.toc-tree li.level-3 {
+  padding-left: 40px;
+}
+
+.toc-tree li.level-4 {
+  padding-left: 48px;
+}
+
+.toc-tree li.level-5 {
+  padding-left: 56px;
+}
+
+.toc-tree li.level-6 {
+  padding-left: 64px;
+}
+
+.toc-tree li:hover{
+}
+
+.toc-tree li.active{
+  opacity: 0.8;
+}

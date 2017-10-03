@@ -1,0 +1,113 @@
+html,body{
+  color : rgba(52,52,52,1);
+}
+
+a {
+  
+}
+
+ul.list > li.active > .header {
+  background      : #E6E6E6;
+}
+
+ul.sublist{
+  /*color: #000;*/
+}
+
+ul.sublist > li > .header > .mark {
+  background: #57acf5;
+}
+
+ul.sublist > li.active > .header {
+  /*background: #dcdfe1;*/
+	color: #fff;
+  background: #3884ff;  
+}
+
+.toc-wrapper{
+  background : #FCFCFC;
+}
+
+/** 笔记分类 **/
+.sidebar-container > .note-catalog-container{
+  background : #f5f5f4;
+  border-right: 1px solid rgb(231,231,231);
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog-footer{
+  border-top : 1px solid #DCDCDC;
+  background : transparent;
+  color      : #828282;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog-footer:hover{
+  color:#C0C0C0;
+}
+
+/** 笔记列表 **/
+.sidebar-container > .note-list-container{
+  background : #FCFCFC;
+  border-right: 1px solid rgb(231,231,231);
+}
+
+.sidebar-container > .note-list-container > .header button{
+  color     : #5493F8;
+}
+
+.note-list .starred {
+  color:    #FFD700;
+}
+.note-list-name-wrap .name {
+  color : #000;
+}
+
+.note-list-container > .content  ul.note-list > li.item{
+  border-top: 1px solid #EEEEEE;
+}
+
+.note-list-container > .content  ul.note-list > li.item > .content {
+  color         : #4680F3;
+}
+
+.note-list-container > .content  ul.note-list > li.item > .content span{
+  border : 1px solid #eee;
+}
+
+.note-list-container > .content  ul.note-list > li.item.active {
+  background: #5493F8;
+}
+
+.note-list-container > .content  ul.note-list > li.item.active > .header {
+  color: #FAFCFE;
+}
+
+.note-list-container > .content  ul.note-list > li.item.active > .content {
+  color: #C8C8C8;
+}
+
+.main-container > .empty-note-container > .content {
+  background : #F0F0F0;
+}
+
+/* 笔记预览 */
+.main-container > .preview-container{
+
+}
+
+.notebook-name-wrap,.update-time-wrap,.create-time-wrap{
+  
+}
+
+/* toc-tree Style */
+.toc-tree {
+  color : #000;
+}
+
+.toc-tree li:hover{
+  background : #f2f5fd;
+}
+
+.toc-tree li.active{
+  color: #fff;
+  background : #3884ff;
+}
