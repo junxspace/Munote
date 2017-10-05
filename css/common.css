@@ -886,7 +886,7 @@ input[type="checkbox"] {
 }
 
 .main-container > .note-container > .editor-container{
-  padding-left  : 8px!important;
+  padding-left  : 24px!important;
   padding-right : 16px;
   box-sizing    : border-box;
   overflow      : hidden;
@@ -974,7 +974,7 @@ input[type="checkbox"] {
 }
 
 .CodeMirror-line{
-  padding-left: 16px!important;
+  padding-left: 0px!important;
 }
 
 .CodeMirror-linenumber{
