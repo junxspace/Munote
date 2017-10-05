@@ -17,6 +17,9 @@ div,h1,h2,h3,h4,h5,h6{
   padding : 0px;
 }
 
+textarea {
+  border-width: 0px;
+}
 a {
   text-decoration: none;
 }
@@ -118,7 +121,7 @@ a {
 /** list style **/
 ul {
   padding            : 0px;
-  list-style         : none;
+  /*list-style         : none;*/
   -webkit-user-select: none;
   margin: 0px; 
 }
@@ -968,13 +971,21 @@ input[type="checkbox"] {
   font-size : 16px;
 }
 
+.CodeMirror-lines {
+    margin-left: -4px;
+}
+
+.CodeMirror-selected{
+  /*left:0px!important;*/
+}
+
 .CodeMirror-gutters{
   background: #fff;
   border-right: 0px;
 }
 
 .CodeMirror-line{
-  padding-left: 0px!important;
+  padding-left: 4px!important;
 }
 
 .CodeMirror-linenumber{
