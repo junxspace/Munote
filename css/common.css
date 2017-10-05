@@ -76,7 +76,7 @@ a {
 
 
 .animation-button {
-  -webkit-transition: all 0.4s ease-in-out!important;
+  -webkit-transition: all 0.3s ease-in-out!important;
 }
 
 .animation-button:hover{
@@ -115,7 +115,7 @@ a {
 }
 
 .animation {
-  -webkit-transition: All 0.4s ease-in-out; 
+  -webkit-transition: All 0.3s ease-in-out; 
 }
 
 /** list style **/
@@ -168,7 +168,7 @@ ul.list > li >.header:hover > i.second {
 }
 
 ul.list > li > .header  div.right{
-  margin-right: 15px; 
+  margin-right: 12px; 
   display     : none;
   cursor      : pointer;
 }
@@ -182,8 +182,8 @@ ul.list > li > .content{
 }
 
 ul.sublist > li {
-  height     : 28px;
-  line-height: 28px;
+  height     : 32px;
+  line-height: 32px;
 }
 
 ul.sublist > li > .header{
@@ -477,6 +477,14 @@ input{
 
 .sidebar-container > .note-catalog-container > .note-catalog li{
   cursor: default;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog ul.list > li {
+    font-weight: bold;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog ul.sublist li {
+    font-weight: 100;
 }
 
 .notebook-list-content{
@@ -793,7 +801,7 @@ input[type="checkbox"] {
 
 .main-container > .preview-container .note-name {
   height       : 32px;
-  font-size    : 20px;
+  font-size    : 22px;
   margin-left  : 32px;
   white-space  : nowrap;
   text-overflow: ellipsis;

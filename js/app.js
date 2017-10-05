@@ -244,8 +244,8 @@ function showNote(_id,editing){
     let notePath   = note.note_path;
     let _update_time  = note.update_time;
     let starred       = note.starred;
-    
-    let absoluteNotePath = path.join(Config.__dataPath, activeNotebookId, activeNoteId);
+    let _noteBookId = activeNoteItem.attr('notebook-id');
+    let absoluteNotePath = path.join(Config.__dataPath, _noteBookId, activeNoteId);
     logger.info('>>> 笔记路径：' + absoluteNotePath);
     // 读取文件内容
     note.note_content = fs.readFileSync(path.join(absoluteNotePath, 'content.md'),"utf-8");
@@ -1024,7 +1024,7 @@ function createNoteItem(r){
   let _create_time    = r.create_time;
   let _starred        = r.starred;
   let _notebook_name  = $('#'+ r.notebook_id).attr('notebook-name');
-  let noteHTML        = '<li class="item note" create-time ="'+jQuery.format.prettyDate(_create_time)+'" note-name="'+_note_name+'" notebook-name="'+_notebook_name+'" id="'+_id+'" starred="'+ r.starred+'" update-time="'+ jQuery.format.prettyDate(_update_time) +'">'
+  let noteHTML        = '<li class="item note" notebook-id="' + r.notebook_id + '" create-time ="'+jQuery.format.prettyDate(_create_time)+'" note-name="'+_note_name+'" notebook-name="'+_notebook_name+'" id="'+_id+'" starred="'+ r.starred+'" update-time="'+ jQuery.format.prettyDate(_update_time) +'">'
                          +'  <div class="header">'
                          +'    <i class="starred fa '+ (_starred == "1" ? "fa-star" : "fa-star-o") +'"></i><span class="note-name">' + _note_name + '</span>'
                          +'  </div>'

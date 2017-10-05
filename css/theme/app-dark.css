@@ -44,6 +44,14 @@ ul.sublist > li.active > .header {
 	background-size: 100% auto !important;	
 }
 
+.sidebar-container > .note-catalog-container > .note-catalog ul.list > li {
+    /*color: #6D7064;*/
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog ul.sublist li {
+    /*color: #000;*/
+}
+
 .sidebar-container > .note-catalog-container > .note-catalog-footer{
 	background-color: rgba(243,241,246,0.1);
 	color      : #DCDCDC;	
@@ -79,7 +87,7 @@ ul.sublist > li.active > .header {
 }
 
 .note-list-container > .content  ul.note-list > li.item{
-	border-top: 1px solid #3e3e3e;
+	border-bottom: 1px solid #3e3e3e;
 }
 
 .note-list-container > .content  ul.note-list > li.item > .content {

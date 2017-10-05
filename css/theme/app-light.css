@@ -36,6 +36,14 @@ ul.sublist > li.active > .header {
   border-right: 1px solid rgb(231,231,231);
 }
 
+.sidebar-container > .note-catalog-container > .note-catalog ul.list > li {
+    color: #6D7064;
+}
+
+.sidebar-container > .note-catalog-container > .note-catalog ul.sublist li {
+    color: #000;
+}
+
 .sidebar-container > .note-catalog-container > .note-catalog-footer{
   border-top : 1px solid #DCDCDC;
   background : transparent;
@@ -64,7 +72,7 @@ ul.sublist > li.active > .header {
 }
 
 .note-list-container > .content  ul.note-list > li.item{
-  border-top: 1px solid #EEEEEE;
+  border-bottom: 1px solid #EEEEEE;
 }
 
 .note-list-container > .content  ul.note-list > li.item > .content {
@@ -72,7 +80,7 @@ ul.sublist > li.active > .header {
 }
 
 .note-list-container > .content  ul.note-list > li.item > .content span{
-  border : 1px solid #eee;
+  border : 1px solid #4680F3;
 }
 
 .note-list-container > .content  ul.note-list > li.item.active {
@@ -85,6 +93,10 @@ ul.sublist > li.active > .header {
 
 .note-list-container > .content  ul.note-list > li.item.active > .content {
   color: #C8C8C8;
+}
+
+.note-list-container > .content  ul.note-list > li.item.active > .content span {
+  border : 1px solid #C8C8C8;
 }
 
 .main-container > .empty-note-container > .content {
