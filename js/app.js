@@ -2436,7 +2436,8 @@ function handleImgLink($target){
     let imgSrc = $(img).attr('src');
     if(imgSrc.startWith(__baseurl)){
       // imgSrc = imgSrc.substring((__baseurl).length, imgSrc.length);
-      imgSrc = path.join(Config.__dataPath, activeNotebookId, activeNoteId, imgSrc);
+      // activeNotebookId
+      imgSrc = path.join(Config.__dataPath, activeNoteItem.attr('notebook-id'), activeNoteId, imgSrc);
       logger.info('imgSrc = ' + imgSrc);
       $(img).attr('src',imgSrc);
     }     

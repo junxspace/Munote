@@ -119,9 +119,9 @@ a {
 }
 
 /** list style **/
-ul {
+.note-catalog ul.list, .note-catalog ul.sublist, ul.note-list {
   padding            : 0px;
-  /*list-style         : none;*/
+  list-style         : none;
   -webkit-user-select: none;
   margin: 0px; 
 }
