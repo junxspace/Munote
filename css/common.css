@@ -119,7 +119,7 @@ a {
 }
 
 /** list style **/
-.note-catalog ul.list, .note-catalog ul.sublist, ul.note-list {
+.note-catalog ul.list, .note-catalog ul.sublist, ul.note-list, .float-panel > ul {
   padding            : 0px;
   list-style         : none;
   -webkit-user-select: none;
@@ -228,7 +228,7 @@ ul.sublist > li > .header {
   box-sizing         : border-box;
   overflow           : hidden;
   z-index            : 99;
-  padding            : 0 8px 0 8px;
+  padding            : 8px;
   display            : none;
   -webkit-user-select: none;  
   border: 1px solid transparent;
@@ -254,7 +254,7 @@ ul.sublist > li > .header {
 }
 
 .float-panel input[type=text]{
-  width  : 100%;
+  /*width  : 100%;*/
   padding: 0px 4px 0px 4px;
 }
 
