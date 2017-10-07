@@ -980,7 +980,7 @@ input[type="checkbox"] {
 }
 
 .CodeMirror-lines {
-    margin-left: -4px;
+ margin-left: -4px;
 }
 
 .CodeMirror-selected{
@@ -1008,7 +1008,6 @@ input[type="checkbox"] {
 .CodeMirror-vsrollbar{
   display: none!important;
 }
-
 
 /* toc-tree Style */
 .toc-tree * {

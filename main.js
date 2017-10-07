@@ -180,7 +180,7 @@ function initMainWindow(){
 	mainWindow.loadURL('file://'+__dirname+'/main.html');
 	// mainWindow.maximize();// 最大化
 
-	// mainWindow.webContents.openDevTools(); //DEBUG TOOLS
+	// mainWindow.webContents.openDevTools(); //DEV TOOLS
 	mainWindow.webContents.__appname = appName;
 	mainWindow.on('closed',()=>{
 		mainWindow = null;
@@ -239,8 +239,6 @@ function initLogger(){
 function initConfig(){
 	let _basePath = "";	// 根路径：默认在用户主目录+".munote"下
 	let _dataPath = ""; // 数据文件路径
-	// let _imgPath  = ""; // 图片文件存放路径
-
 	let _tempPath = ""; // 临时目录
 	let _docPath  = ""; // doc文件存放路径
 	let _htmlPath = ""; // html文件存放路径
@@ -249,7 +247,6 @@ function initConfig(){
 
 	_basePath = mkdir(path.join(app.getPath('home'),'.munote'));
 	_dataPath = mkdir(path.join(_basePath,'data'));
-	// _imgPath  = mkdir(path.join(_dataPath,'img'));
 
 	_tempPath = mkdir(path.join(_basePath,'temp'));
 	_docPath  = mkdir(path.join(_tempPath,'doc'));
@@ -260,7 +257,6 @@ function initConfig(){
 	global.__apphome  = __dirname;//项目根目录
 	global.__basePath = _basePath;
 	global.__dataPath = _dataPath;
-	// global.__imgPath  = _imgPath;
 	global.__tempPath = _tempPath;
 	global.__docPath  = _docPath;
 	global.__htmlPath = _htmlPath;
@@ -296,7 +292,7 @@ function initEventListener(){
 function initGetConfigReqChannel(){
 	ipcMain.on('get-config-req',(event,args) => {
 
-		let configFile = path.join(__dataPath,'munote.json');
+		let configFile = getConfigFile();
 
 	 	// 判断文件是否存在
 		if(!fs.existsSync(configFile)){
@@ -311,9 +307,12 @@ function initGetConfigReqChannel(){
 		Config.__version  = appVersion;
 		Config.__appname  = appName;
 		Config.__dataPath = __dataPath;
-		// Config.__imgPath  = __imgPath;
 		event.sender.send('get-config-resp', Config);
 	});
+}
+
+function getConfigFile(){
+  return path.join(__basePath, 'munote.json');
 }
 
 /**
@@ -322,7 +321,7 @@ function initGetConfigReqChannel(){
 function initSaveConfigReqChannel(){
 	ipcMain.on('save-config-req',(event,config)=>{
 
-		let configFile = path.join(__dataPath,'munote.json');
+		let configFile = getConfigFile();
 
 	 	// 判断文件是否存在
 		if(!fs.existsSync(configFile)){
@@ -426,7 +425,6 @@ function start(){
 
 	logger.debug('basePath =' + __basePath);
 	logger.debug('dataPath =' + __dataPath);
-	// logger.debug('imgPath  =' + __imgPath);
 	logger.debug('tempPath =' + __tempPath);
 	logger.debug('docPath  =' + __docPath);
 	logger.debug('htmlPath =' + __htmlPath);

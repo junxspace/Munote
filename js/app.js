@@ -248,7 +248,8 @@ function showNote(_id,editing){
     let absoluteNotePath = path.join(Config.__dataPath, _noteBookId, activeNoteId);
     logger.info('>>> 笔记路径：' + absoluteNotePath);
     // 读取文件内容
-    note.note_content = fs.readFileSync(path.join(absoluteNotePath, 'content.md'),"utf-8");
+    // note.note_content = fs.readFileSync(path.join(absoluteNotePath, 'content.md'),"utf-8");
+    // note_content = note.note_content;
 
     let $note_name = $('#note_name');
     $note_name.val(_note_name);
@@ -388,6 +389,7 @@ function createNote(_notebook_id){
         logger.error('新建笔记出现异常，error:' + err);
         return;
       }
+
       console.log(newRecord);
 
       let notPath = path.join(_notebook_id, newRecord._id);
@@ -395,25 +397,25 @@ function createNote(_notebook_id){
       
       mkdirs(absoluteNotePath);
 
-      fs.writeFile(path.join(absoluteNotePath, 'content.md'), '', (e)=> {
-        if (e){
-          throw e ;
-        }
+      // fs.writeFile(path.join(absoluteNotePath, 'content.md'), '', (e)=> {
+      //   if (e){
+      //     throw e ;
+      //   }
 
-        db.update(
-            {'_id':newRecord._id, 't_name' : t_note}
-            ,{ $set: {
-              'note_path': notPath,
-              'update_time' : _update_time,
-              }
-            }
-            ,(err,numReplaced)=>{
-              if(err){
-                logger.error('保存笔记失败，错误原因:' + err);
-                return;
-              }
+      //   db.update(
+      //       {'_id':newRecord._id, 't_name' : t_note}
+      //       ,{ $set: {
+      //         'note_path': notPath,
+      //         'update_time' : _update_time,
+      //         }
+      //       }
+      //       ,(err,numReplaced)=>{
+      //         if(err){
+      //           logger.error('保存笔记失败，错误原因:' + err);
+      //           return;
+      //         }
 
-              if(numReplaced){
+              // if(numReplaced){
                 logger.info("File Saved !"); //文件保存成功
 
                 let noteItem = createNoteItem(newRecord);
@@ -425,16 +427,15 @@ function createNote(_notebook_id){
                         ,container: $('#note_list_content_wrapper')});                
 
                 $(noteItem).velocity('finish').velocity('transition.slideLeftBigIn',300);
-
                 
                 // 新增笔记的时候，笔记列表数量要+1
                 let count = parseInt($('#note_list_count').text());
                 $('#note_list_count').text(count+1);
 
                 activeNote(newRecord._id,true);    
-              }
-          }); 
-       });
+              // }
+          // }); 
+       // });
     }
   ); 
 }
@@ -728,10 +729,15 @@ function searchNote(){
 
   logger.info('搜索内容:' + keyword);
 
-  db.query({
-      't_name'       :t_note
-      ,'note_content':
-        { $regex: new RegExp('\\b'+ keyword +'\\b', 'ig') }})
+  // TODO
+  db.query(
+      {
+        't_name' : 't_note'
+        , $or: [
+          {'note_name': { $regex: eval('/'+keyword+ '/ig')}}
+           , {'note_content': { $regex: eval('/'+keyword+ '/ig')}}
+        ]
+      })
     .sort(getSortCondition())
     .exec((err,records)=>{
       if(err){
@@ -1437,21 +1443,22 @@ function saveNote(){
   let _starred      = starred();
   let _update_time  = new Date().getTime();
 
-  let notPath = path.join(activeNotebookId, activeNoteId);
-  let absoluteNotePath = path.join(Config.__dataPath, notPath);
+  // let notPath = path.join(activeNotebookId, activeNoteId);
+  // let absoluteNotePath = path.join(Config.__dataPath, notPath);
       
-  mkdirs(absoluteNotePath);
-  logger.info('>>> [保存]笔记路径：' + absoluteNotePath);
+  // mkdirs(absoluteNotePath);
+  // logger.info('>>> [保存]笔记路径：' + absoluteNotePath);
 
-  fs.writeFile(path.join(absoluteNotePath, 'content.md'), _note_content, (e)=> {
-      if (e){
-        throw e ;
-      }
+  // fs.writeFile(path.join(absoluteNotePath, 'content.md'), _note_content, (e)=> {
+  //     if (e){
+  //       throw e ;
+  //     }
       db.update(
           {'_id':activeNoteId,'t_name' : t_note}
           ,{ $set: {
             'note_name'   : _note_name,
-            'note_path': notPath,
+            // 'note_path': notPath,
+            'note_content': _note_content,
             'starred'     : _starred,
             'update_time' : _update_time,
             }
@@ -1472,7 +1479,7 @@ function saveNote(){
         }); 
 
       logger.info("File Saved !"); //文件保存成功
-     });
+     // });
 }
 
 function starred(){
@@ -2779,8 +2786,8 @@ function initButtonEffect(){
 }
 
 function initDraggable(){
-  $('#search_dialog').draggable();
   // $('#search_dialog').draggable();
+  $('#search_dialog').draggable({ containment: document.body, scroll: false });
 }
 
 // function initNavation(){
