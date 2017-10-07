@@ -228,7 +228,7 @@ ul.sublist > li > .header {
   box-sizing         : border-box;
   overflow           : hidden;
   z-index            : 99;
-  padding            : 16px 16px 16px 16px;
+  padding            : 0 8px 0 8px;
   display            : none;
   -webkit-user-select: none;  
   border: 1px solid transparent;
@@ -792,7 +792,7 @@ input[type="checkbox"] {
 }
 
 .main-container > .preview-container .note-name-container {
-  width : 380px;
+  width : 400px;
   margin: 0px;
   -webkit-user-select: text;
   user-select        : text;  

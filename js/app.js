@@ -2779,7 +2779,7 @@ function initButtonEffect(){
 }
 
 function initDraggable(){
-  $('#search_dialog').draggable({ handle: ".title" });
+  $('#search_dialog').draggable();
   // $('#search_dialog').draggable();
 }
 
