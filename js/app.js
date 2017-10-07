@@ -1343,7 +1343,7 @@ function initEditorCore(){
 	logger.info('initEditorCore()');
   editor = CodeMirror.fromTextArea(document.getElementById('editor-content'), {
 		mode           : 'gfm',
-		// lineNumbers    : true, //行数
+		lineNumbers    : true, //行数
 		lineWrapping   : true, //自动折行
 		styleActiveLine: true, //显示当前行
     scrollbarStyle : "null", //滚动条主题
@@ -1849,7 +1849,18 @@ function findPrevious(){
   } 
 
   editor.setSelection(cursor.from(), cursor.to());
-  editor.scrollIntoView({from: cursor.from(), to: cursor.to()}, 20);
+  // editor.scrollIntoView({from: cursor.from(), to: cursor.to()}, 20);
+  $('.CodeMirror').velocity("scroll", {  
+          duration: 0
+          , delay: 0
+          , container:$('#editor_content_container')});
+
+  setTimeout(()=>{
+    $($('.CodeMirror-code > .CodeMirror-line')[cursor.pos.from.line]).velocity("scroll", {  
+          duration: 0
+          , delay: 0
+          , container:$('#editor_content_container')});  
+  }, 10);
 }
 
 function findNext(){
@@ -1882,7 +1893,20 @@ function findNext(){
   } 
 
   editor.setSelection(cursor.from(), cursor.to());
-  editor.scrollIntoView({from: cursor.from(), to: cursor.to()}, 20);
+  // editor.scrollIntoView({from: cursor.from(), to: cursor.to()}, 20);
+
+  $('.CodeMirror').velocity("scroll", {  
+          duration: 0
+          , delay: 0
+          , container: $('#editor_content_container')});
+
+  setTimeout(()=>{
+    $($('.CodeMirror-code > .CodeMirror-line')[cursor.pos.from.line]).velocity("scroll", {  
+              duration: 0
+              , delay: 0
+              , container:$('#editor_content_container')});  
+  }, 10);
+  
 }
 
 function replaceOnce(){
