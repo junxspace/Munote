@@ -1343,7 +1343,7 @@ function initEditorCore(){
 	logger.info('initEditorCore()');
   editor = CodeMirror.fromTextArea(document.getElementById('editor-content'), {
 		mode           : 'gfm',
-		lineNumbers    : true, //行数
+		// lineNumbers    : true, //行数
 		lineWrapping   : true, //自动折行
 		styleActiveLine: true, //显示当前行
     scrollbarStyle : "null", //滚动条主题

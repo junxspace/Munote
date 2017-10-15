@@ -44,7 +44,7 @@ a {
   height             : 100%;
   z-index            : 999;
   display            : table;
-  background         : rgba(255, 255, 255, 0.2)!important;
+  background         : rgba(255, 255, 255, 0.3)!important;
 }
 
 .loading{

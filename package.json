@@ -25,6 +25,7 @@
     "markdown-it-toc-and-anchor": "^4.1.1",
     "nedb": "^1.8.0",
     "node-mkdirs": "0.0.1",
-    "rmdir": "^1.2.0"
+    "rmdir": "^1.2.0",
+    "shelljs": "^0.7.8"
   }
 }
