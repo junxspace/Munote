@@ -26,10 +26,15 @@ Windows : 双击Electron.exe
 
 # 4. 其他说明
 ## 4.1 数据文件
-munote笔记数据默认在${user_home}/.munote目录，Munote的配置文件在${user_home}/.munote/munote.json,通过修改`__dataPath`来改变数据文件的存放目录。
+munote笔记数据默认在${user_home}/.munote目录，Munote的配置文件在`${user_home}/.munote/munote.json`,通过修改`__dataPath`来改变数据文件的存放目录。
 
 ## 4.2 语言文件
 `munote_cn.properties`表示中文语言配置，`munote_gb.properties`表示英文语言配置，所在目录为：  
 
 + OS X : `{app_home}/Electron.app/Contents/Resources/app/lang`  
 + Window和Linux ：`{app_home}/resources/app/lang`
+
+## 4.3 导出PDF
+1.导出PDF模块依赖[wkhtmltopdf](https://wkhtmltopdf.org/downloads.html)，  
+2.下载对应系统的软件后安装
+3.修改Munote的配置文件在`${user_home}/.munote/munote.json`中的`__wkhtmltopdf_path`(如：`"__wkhtmltopdf_path": "/usr/local/bin/wkhtmltopdf"`)后，重启应用。

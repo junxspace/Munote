@@ -1,5 +1,7 @@
 'use strict';
 
+const {app} = require('electron')
+const {dialog} = require('electron').remote;
 const {ipcRenderer}  = require('electron');
 const {clipboard} = require('electron');
 const {shell} = require('electron');
@@ -36,6 +38,8 @@ var
   ,currentNotebookItem  // 当前操作的（鼠标右键）的笔记本item对象    
   ,activeNotebookItem   // 当前激活（打开）的笔记本item对象     
   ,defaultNotebookId;   // 默认的笔记本id，有且仅有一个
+
+
 
 /**
  * 显示loading...
@@ -397,10 +401,10 @@ function createNote(_notebook_id){
       
       mkdirs(absoluteNotePath);
 
-      // fs.writeFile(path.join(absoluteNotePath, 'content.md'), '', (e)=> {
-      //   if (e){
-      //     throw e ;
-      //   }
+      fs.writeFile(path.join(absoluteNotePath, 'content.md'), '', (e)=> {
+        if (e){
+          throw e ;
+        }
 
       //   db.update(
       //       {'_id':newRecord._id, 't_name' : t_note}
@@ -435,7 +439,7 @@ function createNote(_notebook_id){
                 activeNote(newRecord._id,true);    
               // }
           // }); 
-       // });
+       });
     }
   ); 
 }
@@ -1443,16 +1447,16 @@ function saveNote(){
   let _starred      = starred();
   let _update_time  = new Date().getTime();
 
-  // let notPath = path.join(activeNotebookId, activeNoteId);
-  // let absoluteNotePath = path.join(Config.__dataPath, notPath);
+  let notPath = path.join(activeNotebookId, activeNoteId);
+  let absoluteNotePath = path.join(Config.__dataPath, notPath);
       
-  // mkdirs(absoluteNotePath);
-  // logger.info('>>> [保存]笔记路径：' + absoluteNotePath);
+  mkdirs(absoluteNotePath);
+  logger.info('>>> saveNote() 保存笔记路径：' + absoluteNotePath);
 
-  // fs.writeFile(path.join(absoluteNotePath, 'content.md'), _note_content, (e)=> {
-  //     if (e){
-  //       throw e ;
-  //     }
+  fs.writeFile(path.join(absoluteNotePath, 'content.md'), _note_content, (e)=> {
+      if (e){
+        throw e ;
+      }
       db.update(
           {'_id':activeNoteId,'t_name' : t_note}
           ,{ $set: {
@@ -1479,7 +1483,7 @@ function saveNote(){
         }); 
 
       logger.info("File Saved !"); //文件保存成功
-     // });
+     });
 }
 
 function starred(){
@@ -1736,6 +1740,36 @@ function handleFiles(files){
   }  
 }
 
+function saveAs(_type, _title, callback){
+  // let options = {
+  //     title: 'Save As'
+  //     , filters: [{name: _type, extensions: [_type]}]
+  //     , properties: ['createDirectory']
+  //     // , nameFieldLabel: 'text'
+  //     , defaultPath: path.join(app.getPath('downloads'), _title)
+  //     , showsTagField: false
+  //   };
+
+  // dialog.showSaveDialog(options, (fileName) => {
+  //     if (fileName === undefined){
+  //       unloading();
+  //       return;
+  //     }
+
+  //     console.log('Save As: ' + fileName);
+
+      callback && callback(fileName);
+  // });  
+}
+
+function getNotePath(){
+  if(currentNoteItem){
+    return path.join(Config.__dataPath, currentNoteItem.attr('notebook-id'), currentNoteItem.attr('id'));
+  }
+
+  return path.join(Config.__dataPath, activeNoteItem.attr('notebook-id'), activeNoteItem.attr('id'));
+}
+
 /**
  * 导出笔记文件：
  * @param {String} type : 类型，'markdown','pdf','html','doc'
@@ -1745,24 +1779,27 @@ function exportFile(type){
   hideNoteMenu();
   hideExportMenu();
 
-  logger.info('exportFile() :' + type);
+  logger.info('exportFile() type:' + type);
+
   let _title   = $('#note_name').val();
-  let _noteContent = editor.getValue();
+  let _content = editor.getValue();
+
+  let _data  = {
+      'title': _title
+      , 'content': _content
+      , 'notePath': getNotePath()
+    };
 
   if(type == 'markdown'){
-    let _data  = {'title':_title,'content':_noteContent};
-    emit('export-'+type,_data,downloadFile);
+    emit('export-' + type, _data, downloadFile);
     return;
   }
 
-
-  let _renderContent = md.render(_noteContent);
-  let $html    =  $('<div>' + _renderContent + '</div>');
+  let $html =  $('<div>' + md.render(_content) + '</div>');
   handleImgLink($html);// 处理图片地址
-  convertImage2DataURI($html,($h)=>{
-    let _content = $h.html();
-    let _data    = {'title':_title,'content':_content};
-    emit('export-'+type,_data,downloadFile);
+  convertImage2DataURI($html,($h) => {
+    _data.content = $h.html(); 
+    emit('export-'+type, _data, downloadFile);
   });
 }
 
@@ -1772,6 +1809,8 @@ function exportFile(type){
  */
 function downloadFile(e,file){
   unloading();
+  return;
+
   let $downloadLink = $('<a href="" download=""></a>');
   $downloadLink.attr('href',file).attr('download',path.basename(file));
   $downloadLink[0].click();

@@ -262,6 +262,18 @@ function initConfig(){
 	global.__htmlPath = _htmlPath;
 	global.__pdfPath  = _pdfPath;
 	global.__mdPath   = _mdPath;
+
+  let configFile = getConfigFile();
+
+  // 判断文件是否存在
+  if(!fs.existsSync(configFile)){
+      logger.info('config file not exists !');
+      fs.writeFileSync(configFile,"{}");
+  }
+
+  let Config = require(configFile);
+
+  global.__wkhtmltopdf_path = Config.__wkhtmltopdf_path;
 }
 
 /**
@@ -329,10 +341,22 @@ function initSaveConfigReqChannel(){
 			fs.writeFileSync(configFile,"{}");
 		}
 
-		fs.writeFileSync(configFile,JSON.stringify(config));
-		logger.info(">>> " + JSON.stringify(config));
+		fs.writeFileSync(configFile,JSON.stringify(config, null, 4));
+		logger.info(">>> " + JSON.stringify(config, null, 4));
 		logger.info('保存配置成功');
 	});	
+}
+
+
+function initSaveImageReqChannel(){
+  ipcMain.on('save-image-req',(event,args)=>{
+    logger.debug('[save-image-req] ' + args.notePath);
+    // logger.debug('[save-image-req] ' + args.data);
+    img.save(args.notePath, args.data, (filename)=> {
+        logger.info('fiename:'+filename);
+        event.sender.send('save-image-resp', filename);   
+      });
+  });
 }
 
 /**
@@ -342,23 +366,15 @@ function initExportPdfChannel(){
 	ipcMain.on('export-pdf-req',function(event,args){
 		logger.info('[export-pdf-req]');
 		logger.info("[title]:"+args.title);
-		logger.info("[content]:"+args.content);
+		// logger.info("[content]:"+args.content);
+    logger.info("[fileName]:"+args.fileName);
 
-		exp.exportPDF(args.title,args.content,(file)=>{
-			event.sender.send('export-pdf-resp', file);
-		});
-	});
-
-}
-
-function initSaveImageReqChannel(){
-	ipcMain.on('save-image-req',(event,args)=>{
-		logger.debug('[save-image-req] ' + args.notePath);
-		// logger.debug('[save-image-req] ' + args.data);
-		img.save(args.notePath, args.data, (filename)=> {
-				logger.info('fiename:'+filename);
-				event.sender.send('save-image-resp', filename);		
-			});
+    saveAs('pdf', args.title, (fileName)=>{
+      args.fileName = fileName;
+      exp.exportPDF(args, (file) => {
+        event.sender.send('export-pdf-resp', file);
+      });
+    });    
 	});
 }
 
@@ -366,37 +382,76 @@ function initExportMarkdownChannel(){
 	ipcMain.on('export-markdown-req',(event,args)=>{
 		logger.info('[export-markdown-req]');
 		logger.info("[title]:"+args.title);
-		logger.info("[content]:"+args.content);
+		// logger.info("[content]:"+args.content);
+    logger.info("[fileName]:"+args.fileName);
 		
-		exp.exportMD(args.title,args.content,(file)=>{
-			event.sender.send('export-markdown-resp', file);
-		});
+    saveAs('zip', args.title, (fileName)=>{
+      args.fileName = fileName;
+      exp.exportMD(args, (file)=>{
+        event.sender.send('export-markdown-resp', file);
+      });
+    });
 	});
 }
 
 function initExportHtmlReqChannel(){
-	ipcMain.on('export-html-req',(event,args)=>{
+	ipcMain.on('export-html-req',(event, args)=>{
 		logger.info('[export-html-req]');
-		logger.info("[title]:"+args.title);
-		logger.info("[content]:"+args.content);
+		logger.info("[title]:" + args.title);
+		// logger.info("[content]:" + args.content);
+    logger.info("[fileName]:" + args.fileName);
+
+    saveAs('html', args.title, (fileName)=>{
+      args.fileName = fileName;
+      exp.exportHTML(args, function(fileName){
+        event.sender.send('export-html-resp', fileName);
+      });
+    });
 		
-		exp.exportHTML(args.title,args.content,function(file){
-			event.sender.send('export-html-resp', file);
-		});
 	});
 }
 
-function initExportWorkReqChannel(){
-	ipcMain.on('export-word-req',(event,title,content)=>{
-		logger.info('[export-word-req]');
-		logger.info("[title]:"+title);
-		logger.info("[content]:"+content);
-		
-		exp.exportWord(title,content,(file)=>{
-			event.sender.send('export-word-resp', file);
-		});
-	});
+function getPath(name){
+  try{
+    return app.getPath(name);
+  }catch(e){
+    logger.error(e);
+  }
+
+  return app.getPath('documents');
 }
+
+function saveAs(_type, _title, callback){
+  let options = {
+      title: 'Save As'
+      , filters: [{name: _type, extensions: [_type]}]
+      , properties: ['createDirectory']
+      , defaultPath: path.join(getPath('downloads'), _title + '.' + _type)
+      , showsTagField: false
+    };
+
+  dialog.showSaveDialog(options, (fileName) => {
+      logger.debug('Save As: ' + fileName);
+      // if (fileName === undefined){
+      //   return;
+      // }
+
+      callback && callback(fileName);
+  });  
+}
+
+
+// function initExportWordReqChannel(){
+// 	ipcMain.on('export-word-req',(event,title,content)=>{
+// 		logger.info('[export-word-req]');
+// 		logger.info("[title]:"+title);
+// 		logger.info("[content]:"+content);
+		
+// 		exp.exportWord(title,content,(file)=>{
+// 			event.sender.send('export-word-resp', file);
+// 		});
+// 	});
+// }
 
 /**
  *  初始化与客户端通信事件
@@ -408,7 +463,7 @@ function initChannel(){
 	initSaveImageReqChannel();
 	initExportMarkdownChannel();
 	initExportHtmlReqChannel();
-	initExportWorkReqChannel();
+	// initExportWordReqChannel();
 }
 
 /**
@@ -430,6 +485,7 @@ function start(){
 	logger.debug('htmlPath =' + __htmlPath);
 	logger.debug('pdfPath  =' + __pdfPath);
 	logger.debug('mdPath   =' + __mdPath);	
+
 	logger.debug("Finish start app.");
 }
 
