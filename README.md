@@ -8,13 +8,13 @@ Munote是一个编写markdown笔记的软件，支持OS X、Windows和Linux。
 4. 日间/夜间主题模式
 5. 中文/英文语言
     
-# 2. 使用方法
+# 2. 使用方法(TODO)
 1. 下载对应平台的软件包  
 2. 解压缩
-3. 运行方式
-OS X    : 双击Electron  
-Linux   : ./Electron  
-Windows : 双击Electron.exe  
+3. 运行方式  
+OS X    : 双击Electron.app    
+Linux   : ./Electron    
+Windows : 双击Electron.exe    
 
 # 3. 快捷键
 1. cmd/ctrl + N : 新建笔记  
@@ -35,6 +35,6 @@ munote笔记数据默认在${user_home}/.munote目录，Munote的配置文件在
 + Window和Linux ：`{app_home}/resources/app/lang`
 
 ## 4.3 导出PDF
-1.导出PDF模块依赖[wkhtmltopdf](https://wkhtmltopdf.org/downloads.html)，  
-2.下载对应系统的软件后安装
+1.导出PDF模块依赖[wkhtmltopdf](https://wkhtmltopdf.org/downloads.html)  
+2.下载对应系统的软件后安装  
 3.修改Munote的配置文件在`${user_home}/.munote/munote.json`中的`__wkhtmltopdf_path`(如：`"__wkhtmltopdf_path": "/usr/local/bin/wkhtmltopdf"`)后，重启应用。
