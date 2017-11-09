@@ -366,14 +366,17 @@ function initExportPdfChannel(){
 	ipcMain.on('export-pdf-req',function(event,args){
 		logger.info('[export-pdf-req]');
 		logger.info("[title]:"+args.title);
-		// logger.info("[content]:"+args.content);
-    logger.info("[fileName]:"+args.fileName);
-
+    // logger.info("[content]:"+args.content);
+		logger.info("[notePath]:"+args.notePath);
+    
     saveAs('pdf', args.title, (fileName)=>{
       args.fileName = fileName;
+      logger.info("[fileName]:"+args.fileName);
       exp.exportPDF(args, (file) => {
         event.sender.send('export-pdf-resp', file);
       });
+    }, ()=>{
+      event.sender.send('export-pdf-resp', 'None');
     });    
 	});
 }
@@ -383,13 +386,15 @@ function initExportMarkdownChannel(){
 		logger.info('[export-markdown-req]');
 		logger.info("[title]:"+args.title);
 		// logger.info("[content]:"+args.content);
-    logger.info("[fileName]:"+args.fileName);
+    logger.info("[notePath]:"+args.notePath);
 		
     saveAs('zip', args.title, (fileName)=>{
       args.fileName = fileName;
       exp.exportMD(args, (file)=>{
         event.sender.send('export-markdown-resp', file);
       });
+    }, ()=>{
+      event.sender.send('export-markdown-resp', 'None');
     });
 	});
 }
@@ -399,13 +404,15 @@ function initExportHtmlReqChannel(){
 		logger.info('[export-html-req]');
 		logger.info("[title]:" + args.title);
 		// logger.info("[content]:" + args.content);
-    logger.info("[fileName]:" + args.fileName);
+    logger.info("[notePath]:" + args.notePath);
 
     saveAs('html', args.title, (fileName)=>{
       args.fileName = fileName;
-      exp.exportHTML(args, function(fileName){
-        event.sender.send('export-html-resp', fileName);
+      exp.exportHTML(args, (file)=>{
+        event.sender.send('export-html-resp', file);
       });
+    }, ()=>{
+      event.sender.send('export-html-resp', 'None');
     });
 		
 	});
@@ -421,7 +428,7 @@ function getPath(name){
   return app.getPath('documents');
 }
 
-function saveAs(_type, _title, callback){
+function saveAs(_type, _title, success, fail){
   let options = {
       title: 'Save As'
       , filters: [{name: _type, extensions: [_type]}]
@@ -432,11 +439,12 @@ function saveAs(_type, _title, callback){
 
   dialog.showSaveDialog(options, (fileName) => {
       logger.debug('Save As: ' + fileName);
-      // if (fileName === undefined){
-      //   return;
-      // }
+      if (fileName === undefined){
+        fail && fail();
+        return;
+      }
 
-      callback && callback(fileName);
+      success && success(fileName);
   });  
 }
 
