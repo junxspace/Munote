@@ -179,7 +179,7 @@ function initMainWindow(){
 	mainWindow = new BrowserWindow(browserWindowOptions);
 	mainWindow.loadURL('file://'+__dirname+'/main.html');
 	// mainWindow.maximize();// 最大化
-
+  // mainWindow.webContents.openDevTools(); //DEV TOOLS
 	mainWindow.webContents.__appname = appName;
 	mainWindow.on('closed',()=>{
 		mainWindow = null;
@@ -266,7 +266,7 @@ function initConfig(){
 
   // 判断文件是否存在
   if(!fs.existsSync(configFile)){
-      logger.info('config file not exists !');
+      // logger.info('config file not exists !');
       fs.writeFileSync(configFile,"{}");
   }
 
