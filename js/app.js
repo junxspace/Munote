@@ -2673,6 +2673,14 @@ function initRenderer(){
  */
 function initScrollbar(){
   $('.scrollbar-macosx').scrollbar();
+  $('.scrollbar-macosx2').scrollbar({
+        "autoScrollSize": false,
+        "scrollx": $('.external-scroll_x'),
+        "scrolly": $('.external-scroll_y')
+
+  });
+
+
 }
 
 function switchTheme(_theme){
