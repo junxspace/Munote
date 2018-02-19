@@ -9,7 +9,7 @@ html,body{
   margin    : 0px; 
   padding   : 0px;
   overflow  : hidden;
-  font-family: "Miui-Regular";
+  font-family: "Miui-Regular";  
 }
 
 div,h1,h2,h3,h4,h5,h6{
@@ -62,7 +62,7 @@ a {
   height    : 24px;
   width     : 100%;
   /*background: red;*/
-  -webkit-app-region: drag;
+  -webkit-app-region: drag; 
 }
 
 /**::selection {
@@ -218,7 +218,8 @@ ul.sublist > li > .content{
 }
 
 ul.sublist > li > .header {
-  
+    padding-right: 8px;
+
 }
 
 .float-panel{
@@ -393,20 +394,21 @@ input{
 .menu{
   margin    : 0px;
   padding   : 0px;
-  font-size : 12px;
+  font-size : 13px;
   text-align: left;
   min-width : 150px;
   cursor    : default;
+  font-family: "Helvetica Neue","Helvetica","Arial","PingFang SC","Hiragino Sans GB", "Microsoft YaHei","WenQuanYi Micro Hei", sans-serif;
 }
 
 .menu ul {
   margin-top   : 8px;
   margin-bottom: 8px;
 }
-.menu li {
+.menu li.normal {
   position: relative;
-  height  : 18px;
-  line-height: 18px;
+  height  : 16px;
+  line-height: 16px;
   padding : 2px 24px 2px 24px;
 }
 
@@ -419,22 +421,11 @@ input{
   left     : 8px;
 }
 
-/*.menu li.divided{
-  padding      : 0px;
-  display: none;
-  height    : 0.5px;
-  background: #ddd;
-}
-*/
-.menu li.divided:after{
-  position  : absolute;
-  content   : '';
-  top       : 0;
-  left      : 0;
+.menu li.divided {
   width     : 100%;
-  /*background: rgba(34,36,38,.1);*/
   background: #ddd;
-  height    : 1px;
+  margin: 4px 0 4px 0;
+  height: 1px;
 }
 
 .menu li:hover {
@@ -782,18 +773,17 @@ input[type="checkbox"] {
 .main-container > .preview-container .head {
   position: fixed;
   width   : 100%;
-  height  : 80px;
+  height  : 60px;
   z-index: 99;
 }
 
 .main-container > .preview-container .content {
   width   : 100%;
-  padding: 0 4px 0 24px;
+  padding: 0 4px 0 56px;
 }
 
 .main-container > .preview-container .note-name-container {
-  width : 400px;
-  margin: 0px;
+  margin: 0 56px 0 56px;
   -webkit-user-select: text;
   user-select        : text;  
   cursor:default;   
@@ -802,7 +792,7 @@ input[type="checkbox"] {
 .main-container > .preview-container .note-name {
   height       : 32px;
   font-size    : 22px;
-  margin-left  : 32px;
+  margin-left  : 0px;
   white-space  : nowrap;
   text-overflow: ellipsis;
   overflow     : hidden;
@@ -810,7 +800,7 @@ input[type="checkbox"] {
 
 .main-container > .preview-container .note-detail {
   text-align  : center;
-  margin-left  : 32px;
+  margin: 0 56px 0 56px;
   padding     : 0px;
   height      : 24px;
   letter-spacing: 0!important;
@@ -837,7 +827,7 @@ input[type="checkbox"] {
   padding-bottom: 32px;
   box-sizing    : border-box;
   overflow      : hidden;
-  padding-top   : 80px;
+  padding-top   : 60px;
 }
 
 .main-container > .note-container{
@@ -849,30 +839,29 @@ input[type="checkbox"] {
 }
 
 .main-container > .note-container > .header{
-  margin-top : -56px;
-  height     : 56px;
-  width      : 100%;
+    margin-top: -56px;
+    padding: 0 56px 0 56px;
+    height: 56px;
+    /*border-bottom: 1px solid #eee!important;*/
 }
 
 .main-container > .note-container > .header > input.note-title{
-  margin    : 16px 8px 8px 24px;
+  margin-top: 16px;
   height    : 32px;
   font-size : 20px;
-  width     : 380px;
+  width     : 100%;
   border    : 0px;
   text-align: left;
   outline   : none;
   background: transparent;
 }
 
-
 #editor_menubar{
   position   : absolute;
   margin     : 0px;
-  top        : 16px;
-  right      : 16px;
-  width      : 180px;
-  height     : 32px;
+  top        : 24px;
+  right      : 20px;
+  width      : 18px;
   line-height: 32px;
   text-align : center;
   z-index: 99;
@@ -897,8 +886,8 @@ input[type="checkbox"] {
 }
 
 .main-container > .note-container > .editor-container{
-  padding-left  : 24px!important;
-  padding-right : 16px;
+  padding-left  : 56px!important;
+  padding-right : 56px!important;
   box-sizing    : border-box;
   overflow      : hidden;
   position      : relative;
@@ -981,10 +970,15 @@ input[type="checkbox"] {
 
 .CodeMirror-lines {
  margin-left: -4px;
+ font-family: "Miui-Regular"
 }
 
 .CodeMirror-selected{
   /*left:0px!important;*/
+}
+
+.CodeMirror-cursor {
+    border-left: 2px solid rgb(30,98,184)!important;
 }
 
 .CodeMirror-gutters{
@@ -1060,4 +1054,9 @@ input[type="checkbox"] {
 
 .toc-tree li.active{
   opacity: 0.8;
+}
+
+.markdown-body {
+  overflow: auto;
+  padding-right: 56px;
 }

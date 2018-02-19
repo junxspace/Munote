@@ -129,12 +129,12 @@ function toggleMainWindow(){
 
 function createLoadingWindow() {
 	let browserWindowOptions = {
-		minWidth             : 1000,
-		minHeight            : 600,
-		width                : 1000,
-		height               : 600,
+		minWidth             : 1050,
+		minHeight            : 650,
+		width                : 1050,
+		height               : 650,
 		center               : true,
-		resizable            : true,//Boolean - Whether window is resizable.
+		resizable            : true, //Boolean - Whether window is resizable.
 		//alwaysOnTop          :true,// Boolean - Whether the window should always stay on top of other windows.
 		fullscreen           : false,//Boolean - Whether the window should show in fullscreen. When set to false the fullscreen button will be hidden or disabled on OS X.
 		title                : appName,
@@ -179,7 +179,7 @@ function initMainWindow(){
 	mainWindow = new BrowserWindow(browserWindowOptions);
 	mainWindow.loadURL('file://'+__dirname+'/main.html');
 	// mainWindow.maximize();// 最大化
-  // mainWindow.webContents.openDevTools(); //DEV TOOLS
+    // mainWindow.webContents.openDevTools(); //DEV TOOLS
 	mainWindow.webContents.__appname = appName;
 	mainWindow.on('closed',()=>{
 		mainWindow = null;
@@ -477,12 +477,12 @@ function initChannel(){
  * 初始化应用
  */
 function start(){
-	let shouldQuit = makeSingleInstance();
-  if (shouldQuit) return app.quit();
+    let shouldQuit = makeSingleInstance();
+    if (shouldQuit) return app.quit();
 
 	initEventListener(); // 初始化应用事件监听器
 	initConfig();   // 初始化配置
-	initLogger();	   
+	initLogger();	// 初始化日志框架
 	initChannel();  // 初始化与客户端渠道事件
 
 	logger.debug('basePath =' + __basePath);

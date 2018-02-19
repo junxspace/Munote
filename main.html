@@ -53,7 +53,7 @@
               <i class="first fa fa-book"></i><i class="second fa fa-angle-right"></i><span class="l-notebook-name"></span>
               <div class="right animation-button" onclick="showNewNotebookPanel(event)"><i class="fa fa-plus"></i></div>
             </div>
-            <div class="content notebook-list-content  full-height">
+            <div class="content notebook-list-content full-height">
               <ul class="sublist" id="notebook_list" onmousedown="handleNotebookMouseDown(event)"></ul>
             </div>
           </li>
@@ -85,10 +85,10 @@
             <i class="fa fa-spinner searching" id="searching"></i>
             <i class="fa fa-times clear-search" id="clear_search" onclick="clearSearch()"></i>
           </div>
-        </div> 
+        </div>
       </div>
       <div class="content scrollbar-macosx full-height" id="note_list_content_wrapper">
-          <ul class="note-list full-height" id="note_list" onmouseup="handleNoteMouseUp(event)"></ul>
+          <ul class="note-list full-height" id="note_list" oncontextmenu="handleNoteMouseUp(event)" onclick="handleNoteMouseUp(event)"></ul>
       </div>
 		</div>
 	</div>
@@ -125,22 +125,21 @@
         <!-- <div class="pure-u-1-5" id="toggle_sidebar_btn" onclick="toggleSidebar()"><i class="fa fa-expand"></i></div> -->
 
         <!-- 编辑/阅读模式 -->
-        <div class="pure-u-1-6" id="toggle_preview_btn" onclick="togglePreview()"><i class="fa fa-pencil"></i></div>
+        <!-- <div class="pure-u-1-1" id="toggle_preview_btn" onclick="togglePreview()"><i class="fa fa-pencil"></i></div> -->
 
         <!--  收藏 :  fa fa-star   已收藏，fa fa-star-o 未收藏 -->
-        <div class="pure-u-1-6" id="starred_btn" onclick="toggleStarred()"><i class="starred fa fa-star-o"></i></div>
+        <div class="pure-u-1-1" id="starred_btn" onclick="toggleStarred()"><i class="starred fa fa-star-o"></i></div>
 
         <!-- 保存 -->
-        <div class="pure-u-1-6" id="save_btn" onclick="saveNote()"><i class="fa fa-floppy-o"></i></div>
+        <!-- <div class="pure-u-1-1" id="save_btn" onclick="saveNote()"><i class="fa fa-floppy-o"></i></div> -->
 
         <!-- 导出 -->
-        <div class="pure-u-1-6" id="export_btn" onclick="showExportMenu(event)"><i class="fa fa-share"></i></div>
+        <div class="pure-u-1-1" id="export_btn" onclick="showExportMenu(event)"><i class="fa fa-share"></i></div>
        
-        <!-- 显示/隐藏导航栏 -->
-        <div class="pure-u-1-6" id="preview_btn" onclick="toggleNavigation()"><i class="fa fa-bars"></i></div>              
-
+        <!-- 显示/隐藏导航 -->
+        <div class="pure-u-1-1" id="preview_btn" onclick="toggleNavigation()"><i class="fa fa-bars"></i></div>              
         <!-- 设置 -->
-        <div class="pure-u-1-6 active" id="toggle_settings_btn" onclick="toggleSettings(event)"><i class="fa fa-gear"></i></div>
+        <!-- <div class="pure-u-1-1 active" id="toggle_settings_btn" onclick="toggleSettings(event)"><i class="fa fa-gear"></i></div> -->
     </div>
     
     <!-- 阅读模式 --> 
@@ -159,8 +158,8 @@
         </div>
       </div>
       <div class="content full-height">
-        <div class="pure-g full-height">
-          <div class="pure-u-1-1 markdown-body scrollbar-macosx full-height" id="preview_content">
+        <div class="pure-g full-height" style="margin-right: 0px;">
+          <div class="pure-u-1-1 markdown-body full-height" id="preview_content">
           </div>  
         </div>
       </div>
@@ -221,11 +220,12 @@
   <!-- 笔记本列表右键菜单 -->
   <div class="float-panel menu" id="notebook_menu" onmouseleave="hideNotebookMenu()">
     <ul>
-      <li class="l-mark-default" onclick="toMarkDefaultNotebook(event)"></li>
+      <li class="normal l-mark-default" onclick="toMarkDefaultNotebook(event)"></li>
       <!-- <li class="divided l-new-notebook" onclick="toCreateNotebook(event)"></li> -->
-      <li class="divided l-new-note" onclick="toCreateNote(2)"></li>
-      <li class="l-rename" onclick="toRenameNotebook(event)"></li>
-      <li class="l-delete"  onclick="toDelNotebook(event)"></li>
+      <li class="divided"></li>
+      <li class="normal l-new-note" onclick="toCreateNote(2)"></li>
+      <li class="normal l-rename" onclick="toRenameNotebook(event)"></li>
+      <li class="normal l-delete"  onclick="toDelNotebook(event)"></li>
     </ul>
   </div>
 
@@ -233,10 +233,11 @@
   <div class="float-panel menu" id="note_menu" onmouseleave="hideNoteMenu()">
     <ul>
       <!-- <li class="" onclick="toggleStarred()">星标</li> -->
-      <li class="l-export-markdown" onclick="exportFile('markdown')"></li>
-      <li class="l-export-html" onclick="exportFile('html')"></li>
-      <li class="l-export-pdf" onclick="exportFile('pdf')"></li>
-      <li class="divided l-delete" onclick="toDelNote(event)"></li>
+      <li class="normal l-export-markdown" onclick="exportFile('markdown')"></li>
+      <li class="normal l-export-html" onclick="exportFile('html')"></li>
+      <li class="normal l-export-pdf" onclick="exportFile('pdf')"></li>
+      <li class="divided"></li>
+      <li class="normal l-delete" onclick="toDelNote(event)"></li>
     </ul>
   </div>    
 
@@ -253,9 +254,9 @@
   <!-- 菜单栏导出按钮菜单 -->
   <div class="float-panel menu" id="export_menu" onmouseleave="hideExportMenu()">
     <ul>
-      <li onclick="exportFile('markdown')" class="l-export-markdown"></li>
-      <li onclick="exportFile('pdf')" class="l-export-pdf"></li>
-      <li onclick="exportFile('html')" class="l-export-html"></li>
+      <li onclick="exportFile('markdown')" class="normal l-export-markdown"></li>
+      <li onclick="exportFile('pdf')" class="normal l-export-pdf"></li>
+      <li onclick="exportFile('html')" class="normal l-export-html"></li>
     </ul>
   </div>   
 

@@ -175,6 +175,7 @@ function createNotebook(){
  * @param {String} e : event对象
  */
 function handleNoteMouseUp(e){
+    console.log("handleNoteMouseUp")
   let $target = $(e.target).closest('li.note');
   let _id     = $target.attr('id');
 
@@ -1350,11 +1351,11 @@ function initEditorCore(){
 		// lineNumbers    : true, //行数
 		lineWrapping   : true, //自动折行
 		styleActiveLine: true, //显示当前行
-    scrollbarStyle : "null", //滚动条主题
+        scrollbarStyle : "null", //滚动条主题
 		theme          : 'eclipse',//light主题
 		extraKeys      : {
-      "Enter": "newlineAndIndentContinueMarkdownList",
-      "Alt-F": "findPersistent"
+            "Enter": "newlineAndIndentContinueMarkdownList",
+            "Alt-F": "findPersistent"
     }
     // ,highlightSelectionMatches: {showToken: /\w/, annotateScrollbar: true}
   });
@@ -2190,13 +2191,12 @@ function initConfig(callback){
 
 function toggleSidebar(){
 	if($('#sidebar_container').is(':hidden')){
-    logger.info('show sidebar');
 		showSidebar();
-	}else{
-    hideNavigation();
-		hideSidebar();
-    logger.info('hide sidebar');
+    return;
 	}
+   
+  hideNavigation();
+	hideSidebar();
 }
 
 /**
@@ -2204,28 +2204,79 @@ function toggleSidebar(){
  */
 function hideSidebar(){
   $('#toggle_sidebar_btn > i').removeClass('fa-expand').addClass('fa-compress');
-  $('#sidebar_container')
-    .velocity("finish")
-    .velocity(
-        {'margin-left':-380}
-        ,{ 
-          duration: 350
-          ,begin :()=>{
-            let _width ;
-            if(state == 3){
-              _width = $('#note_container').width();
-            }else{
-              _width = $('#preview_container').width();
-            }
+  // $('#sidebar_container')
+  //   .velocity("finish")
+  //   .velocity(
+  //       {'margin-left':-380}
+  //       ,{ 
+  //         duration: 350
+  //         ,begin :()=>{
+  //           let _width ;
+  //           if(state == 3){
+  //             _width = $('#note_container').width();
+  //           }else{
+  //             _width = $('#preview_container').width();
+  //           }
 
-            $('#note_container').css('width',_width);
-            $('#preview_container').css('width',_width);
-          }
-          ,complete:()=>{
-            $('#sidebar_container').hide();
-          }
-        }
-    );
+  //           $('#note_container').css('width',_width);
+  //           // $('#preview_container').css('width',_width);
+
+  //           $('#preview_container')
+  //               .css('width', "100%")
+  //               .css('margin-left', "0")
+  //               .css('margin-right', "0");
+  //           $('#preview_container .content').css('width', "100%");
+            
+  //           let _pad_width = ($(window).width() - _width)/2
+
+  //           $('#preview_container .head')
+  //               .css('padding-left', _pad_width)
+  //               .css('padding-right', _pad_width);
+
+  //           $('#preview_content')
+  //               .css('width',_width)
+  //               .css('padding-left', _pad_width)
+  //               .css('padding-right', _pad_width);
+  //         }
+  //         ,complete:()=>{
+  //           // $('#sidebar_container').hide();
+  //         }
+  //       }
+  //   );
+
+    let _width ;
+    if(state == 3){
+      _width = $('#note_container').width();
+    }else{
+      _width = $('#preview_container').width();
+    }
+    let _pad_width = ($(window).width() - _width)/2
+
+    $('#note_container').css('width',_width);
+    $('#preview_container')
+        .css('width', "100%")
+        .css('margin-left', "0")
+        .css('margin-right', "0");
+    $('#preview_container .content').css('width', "100%!important");
+    $('#preview_content').css('width',_width);
+
+    var mySequence = [
+        { e: $('#sidebar_container'), p: { 'margin-left': "-380" }, o: { duration: 350}},
+        { e: $('#preview_container .head'), p: { 'padding-left': _pad_width, 'padding-right': _pad_width }, o: { duration: 350}},
+        { e: $('#preview_content'), p: { 'padding-left': _pad_width, 'padding-right': _pad_width }, o: { duration: 350}}
+      ];
+
+    $('#sidebar_container')
+        .velocity("finish")
+        .velocity({ 'margin-left':-380 },{ duration: 200 });
+
+    $('#preview_container .head')
+        .velocity("finish")
+        .velocity({ 'padding-left': _pad_width, 'padding-right': _pad_width },{ duration: 200 });
+
+    $('#preview_content')
+        .velocity("finish")
+        .velocity({ 'padding-left': _pad_width, 'padding-right': _pad_width },{ duration: 200 });
 }
 
 /**
@@ -2233,21 +2284,51 @@ function hideSidebar(){
  */
 function showSidebar(){
 	$('#toggle_sidebar_btn > i').removeClass('fa-compress').addClass('fa-expand');
-  $('#sidebar_container')
-    .velocity("finish")
-    .velocity(
-      {'margin-left':0}
-      ,{ 
-        duration: 350
-        ,begin :()=>{
-          $('#sidebar_container').show();
-        }
-        ,complete:()=>{
-          $('#note_container').css('width','');
-          $('#preview_container').css('width','');
-        }
-      }
-    );
+    // $('#sidebar_container')
+    //   .velocity("finish")
+    //   .velocity(
+    //     {'margin-left':0}
+    //     ,{ 
+    //       duration: 350
+    //       ,begin :()=>{
+    //         $('#sidebar_container').show();
+    //       }
+    //       ,complete:()=>{
+    //         $('#note_container').css('width','');
+    //         // $('#preview_container').css('width','');
+
+    //         $('#preview_container')
+    //             .css('margin-left', "auto")
+    //             .css('margin-right', "auto");
+    //         $('#preview_container .content').css('width', "");
+    //         $('#preview_container .head')
+    //             .css('padding-left', "")
+    //             .css('padding-right', "");          
+    //         $('#preview_content')
+    //           .css('padding-left', "")
+    //           .css('padding-right', "");          
+    //       }
+    //     }
+    //   );
+
+    $('#note_container').css('width','');
+    $('#preview_container')
+        .css('margin-left', "auto")
+        .css('margin-right', "auto");
+    $('#preview_container .content').css('width', "");   
+
+    $('#sidebar_container')
+        .velocity("finish")
+        .velocity({ 'margin-left': 0 },{ duration: 200 });
+
+    $('#preview_container .head')
+        .velocity("finish")
+        .velocity({ 'padding-left': '', 'padding-right': '' },{ duration: 200 });
+
+    $('#preview_content')
+        .velocity("finish")
+        .velocity({ 'padding-left': '', 'padding-right': '' },{ duration: 200 });
+
 }
 
 function toggleNotebookList(){
@@ -2364,7 +2445,7 @@ function hideExportMenu(){
  * 显示隐藏预览
  */
 function togglePreview(){
-  if(!activeNoteId || !$('#toggle_preview_btn').hasClass('active')){
+  if(!activeNoteId && state != 3 && state != 4){
     return;
   }
 
@@ -2673,14 +2754,6 @@ function initRenderer(){
  */
 function initScrollbar(){
   $('.scrollbar-macosx').scrollbar();
-  $('.scrollbar-macosx2').scrollbar({
-        "autoScrollSize": false,
-        "scrollx": $('.external-scroll_x'),
-        "scrolly": $('.external-scroll_y')
-
-  });
-
-
 }
 
 function switchTheme(_theme){
