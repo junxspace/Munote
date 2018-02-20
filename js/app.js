@@ -1434,7 +1434,8 @@ function applyItalic(){
  */
 function saveNote(){
   logger.debug('saveNote(), activeNoteId='+activeNoteId+',noteChanged='+noteChanged+',state='+state);
-  if(!activeNoteId || !noteChanged || state != 3 || !$('#save_btn').hasClass('active')){
+  // if(!activeNoteId || !noteChanged || state != 3 || !$('#save_btn').hasClass('active')){
+  if(!activeNoteId && !noteChanged && state != 3){
     logger.warn('不满足保存笔记条件!');
     return;
   }
@@ -2260,15 +2261,14 @@ function hideSidebar(){
     $('#preview_container .content').css('width', "100%!important");
     $('#preview_content').css('width',_width);
 
-    var mySequence = [
-        { e: $('#sidebar_container'), p: { 'margin-left': "-380" }, o: { duration: 350}},
-        { e: $('#preview_container .head'), p: { 'padding-left': _pad_width, 'padding-right': _pad_width }, o: { duration: 350}},
-        { e: $('#preview_content'), p: { 'padding-left': _pad_width, 'padding-right': _pad_width }, o: { duration: 350}}
-      ];
-
     $('#sidebar_container')
         .velocity("finish")
-        .velocity({ 'margin-left':-380 },{ duration: 200 });
+        .velocity({ 'margin-left':-380 }
+          ,{ duration: 200 
+            , complete:()=>{
+              $('#sidebar_container').hide();
+            }
+          });
 
     $('#preview_container .head')
         .velocity("finish")
@@ -2319,7 +2319,13 @@ function showSidebar(){
 
     $('#sidebar_container')
         .velocity("finish")
-        .velocity({ 'margin-left': 0 },{ duration: 200 });
+        .velocity(
+          { 'margin-left': 0 }
+          ,{ duration: 200
+            , begin :()=>{
+              $('#sidebar_container').show();
+            }
+          });
 
     $('#preview_container .head')
         .velocity("finish")

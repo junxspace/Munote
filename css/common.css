@@ -737,7 +737,7 @@ input[type="checkbox"] {
 /* 笔记时间线 */
 .main-container > .timeline-note-container{
   height     : 100%;
-  padding-top: 10%;
+  padding-top: 100px;
   box-sizing : border-box;
   overflow   : hidden;
   text-align : center;
