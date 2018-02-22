@@ -185,7 +185,7 @@ function initMainWindow(){
 		mainWindow = null;
 	});
 
-  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.on('did-finish-load', () => {
       mainWindow.show();
 
       if (loadingWindow) {
@@ -193,7 +193,7 @@ function initMainWindow(){
           mainWindow.setBounds(loadingScreenBounds);
           loadingWindow.close();
       }
-  });
+    });
 
 	// mainWindow.show();
 }

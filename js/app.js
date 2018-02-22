@@ -2333,7 +2333,7 @@ function showSidebar(){
 
     $('#preview_content')
         .velocity("finish")
-        .velocity({ 'padding-left': '', 'padding-right': '' },{ duration: 200 });
+        .velocity({ 'padding-left': '', 'padding-right': '56px' },{ duration: 200 });
 
 }
 
