@@ -2970,6 +2970,7 @@ function init(){
     initDraggable();
     // initAutoSave();
     // initNavation();
+    require('electron').webFrame.setZoomLevelLimits(1,1);
     unloading(); // 所有处理完之后，隐藏loading
   });
 }
