@@ -1781,27 +1781,34 @@ function exportFile(type){
   hideNoteMenu();
   hideExportMenu();
 
-  logger.info('exportFile() type:' + type);
+  logger.info('exportFile() type:' + type + ', currentNotebookId: ' + currentNoteItem.attr('id'));
 
-  let _title   = $('#note_name').val();
-  let _content = editor.getValue();
+  db.query({'_id': currentNoteItem.attr('id'),"t_name":t_note},(err,records)=>{
+    if(err){
+      logger.error('查询笔记失败，error:' + err);
+      return;
+    }
 
-  let _data  = {
+    // 根据id只能查到一条
+    let _title = records[0].note_name;
+    let _content = records[0].note_content;
+    let _data  = {
       'title': _title
       , 'content': _content
       , 'notePath': getNotePath()
     };
 
-  if(type == 'markdown'){
-    emit('export-' + type, _data, downloadFile);
-    return;
-  }
+    if(type == 'markdown'){
+      emit('export-' + type, _data, downloadFile);
+      return;
+    }
 
-  let $html =  $('<div>' + md.render(_content) + '</div>');
-  handleImgLink($html);// 处理图片地址
-  convertImage2DataURI($html,($h) => {
-    _data.content = $h.html(); 
-    emit('export-'+type, _data, downloadFile);
+    let $html =  $('<div>' + md.render(_content) + '</div>');
+    handleImgLink($html);// 处理图片地址
+    convertImage2DataURI($html,($h) => {
+      _data.content = $h.html(); 
+      emit('export-'+type, _data, downloadFile);
+    });
   });
 }
 

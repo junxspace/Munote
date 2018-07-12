@@ -16,7 +16,7 @@
 
 .markdown-body ::selection {
     color:inherit;
-    background-color:#545454;
+    background-color: #545454;
     text-shadow:none;
 }
 

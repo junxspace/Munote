@@ -179,7 +179,7 @@ function initMainWindow(){
 	mainWindow = new BrowserWindow(browserWindowOptions);
 	mainWindow.loadURL('file://'+__dirname+'/main.html');
 	// mainWindow.maximize();// 最大化
-    // mainWindow.webContents.openDevTools(); //DEV TOOLS
+  // mainWindow.webContents.openDevTools(); //DEV TOOLS
 	mainWindow.webContents.__appname = appName;
 	mainWindow.on('closed',()=>{
 		mainWindow = null;

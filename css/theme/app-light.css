@@ -125,3 +125,7 @@ ul.sublist > li.active > .header {
   color: #fff;
   background : #3884ff;
 }
+
+.CodeMirror-cursor {
+    border-left: 2px solid rgb(30,98,184)!important;
+}
